@@ -5,6 +5,21 @@ nach [Semantic Versioning](https://semver.org/lang/de/). Solange die Hauptversio
 0 ist, kann sich alles ändern. Jede Zeile nennt, was Nutzer merken; Unfertiges
 steht als „unfertig“ da.
 
+## [0.1.2] – 2026-10-21
+
+### Behoben
+- Unter „Dunkle Darstellung bevorzugen“ startet Dokumente dunkel, sobald
+  das Thema eine dunkle Fassung hat (Querencia-Klassisch ab 0.2, QD-081):
+  GTK 4.22 lädt das dunkle Thema-CSS sonst nur bei einem Wechsel im
+  laufenden Programm. Dokumente meldet `gtk-interface-color-scheme` einmal
+  beim Start. Hell ändert sich nichts.
+
+### Geändert
+- Seiten und Miniaturen bleiben auch dunkel weiß wie Papier; die Fläche
+  hinter den Seiten bleibt grau. Die Programm-CSS enthält keine Farbe, die
+  dem Thema widerspricht.
+- Texte und Katalog unverändert.
+
 ## [0.1.1] – 2026-10-20
 
 ### Behoben

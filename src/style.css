@@ -41,6 +41,10 @@ window.qd-fullscreen qd-view {
   background-color: #000000;
 }
 
+/* Papier der Miniatur, bis Poppler die Seite gezeichnet hat: weiß wie die
+   Seiten in der Ansicht (view.rs), auch unter dem dunklen Thema (Evince
+   färbt Seiten ebenfalls nicht um). Deshalb kein Dunkelblock und keine
+   Bindung des Anbieters an gtk-interface-color-scheme (QD-081). */
 listview.qd-thumbnails picture.qd-thumb {
   background-color: #ffffff;
   box-shadow: 0 0 0 1px alpha(black, 0.45);

@@ -45,6 +45,12 @@ fn main() -> glib::ExitCode {
         viewer::use_classic_icon_theme();
         resource::register();
         viewer::load_css();
+        // QD-081: GTK 4.22 lädt bei „prefer-dark“ das dunkle Thema-CSS nur bei
+        // einem Wechsel im laufenden Programm; ein Neustart bliebe hell. Die
+        // Meldung stößt das Nachladen einmal an (hell bleibt unverändert).
+        if let Some(s) = gtk::Settings::default() {
+            s.notify("gtk-interface-color-scheme");
+        }
         viewer::install_accels(app);
         recent::init();
         app.set_menubar(Some(&viewer::menu_model()));
