@@ -70,6 +70,12 @@ Stufe, Suche über alle Seiten mit Blättern währenddessen.
 
 Test-PDFs: `werkzeug/testpdf.py <ordner>` (nur selbst erzeugter Blindtext).
 
+Nebenfenster (QD-076, ab 0.1.1): Szenario `sicht-szenario.sh` im
+Arbeitsordner `~/projects/querencia-dokumente-011/werkzeug/` (außerhalb des
+Repos, wie die Integration). Fehler, Eigenschaften, Info und Passwort je
+dreimal öffnen und schließen; die Titelleiste wird über die Pixel ihrer
+Farbe gezählt (`titelleiste.py`), GTK-Meldungen im Programmprotokoll.
+
 Belege: `nachweis/gui/<name>/` (Bilder, `ablauf.log`, `app.log`,
 `status.txt`, Zwischenablage, Druck-PDF, `messung.txt`).
 

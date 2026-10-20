@@ -7,7 +7,7 @@
 //! Dekoration an. Jedes Dokument bekommt ein eigenes Fenster mit eigenen
 //! Hintergrundfäden (render.rs); ein leeres Fenster wird wiederverwendet.
 
-use std::cell::{Cell, OnceCell, RefCell};
+use std::cell::{Cell, RefCell};
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
@@ -17,7 +17,7 @@ use futures_util::StreamExt;
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib};
 
-use crate::dialogs::{self, PasswordDialog};
+use crate::dialogs;
 use crate::document::{Doc, OpenError};
 use crate::i18n::{gettext, gettext_f, ngettext_f, pgettext};
 use crate::render::{Job, Message, Renderer, image_size};
@@ -285,10 +285,11 @@ pub struct Viewer {
     statusbar_visible: Cell<bool>,
     sidebar_visible: Cell<bool>,
     print_settings: Rc<RefCell<Option<gtk::PrintSettings>>>,
-    properties_window: OnceCell<gtk::Window>,
-    error_window: OnceCell<gtk::Window>,
-    about_window: OnceCell<gtk::Window>,
-    password: OnceCell<Rc<PasswordDialog>>,
+    /// Nebenfenster, je Öffnen neu gebaut (QD-076, dialogs.rs).
+    properties_window: dialogs::Slot,
+    error_window: dialogs::Slot,
+    about_window: dialogs::Slot,
+    password_window: dialogs::Slot,
     jobs_queued: Cell<bool>,
     opened_at: Cell<Option<Instant>>,
     /// Das Fenster ist gezeichnet (siehe open_file).
@@ -477,6 +478,10 @@ impl Viewer {
         vbox.append(&statusbar);
         window.set_child(Some(&vbox));
 
+        let properties_window = dialogs::Slot::new(&window, false);
+        let error_window = dialogs::Slot::new(&window, true);
+        let about_window = dialogs::Slot::new(&window, true);
+        let password_window = dialogs::Slot::new(&window, true);
         let v = Rc::new(Self {
             window,
             toolbar,
@@ -506,10 +511,10 @@ impl Viewer {
             statusbar_visible: Cell::new(true),
             sidebar_visible: Cell::new(true),
             print_settings: Rc::new(RefCell::new(None)),
-            properties_window: OnceCell::new(),
-            error_window: OnceCell::new(),
-            about_window: OnceCell::new(),
-            password: OnceCell::new(),
+            properties_window,
+            error_window,
+            about_window,
+            password_window,
             jobs_queued: Cell::new(false),
             opened_at: Cell::new(None),
             shown: Cell::new(false),
@@ -732,11 +737,6 @@ impl Viewer {
         self.view.document()?.page_for_label(text)
     }
 
-    fn error_window(&self) -> &gtk::Window {
-        self.error_window
-            .get_or_init(|| dialogs::window(&self.window, true))
-    }
-
     fn show_open_error(&self, path: &Path, err: &OpenError) {
         let name = path
             .file_name()
@@ -759,7 +759,7 @@ impl Viewer {
                 gettext("The document is password protected.")
             }
         };
-        dialogs::show_error(self.error_window(), &primary, &detail);
+        dialogs::show_error(&self.error_window, &primary, &detail);
         if debug() {
             eprintln!("querencia-dokumente: Öffnen fehlgeschlagen: {name}: {err:?}");
         }
@@ -791,7 +791,7 @@ impl Viewer {
         match file.path() {
             Some(path) => self.load(path, None),
             None => dialogs::show_error(
-                self.error_window(),
+                &self.error_window,
                 &gettext_f(
                     "Unable to open document “{name}”.",
                     &[("name", &file.uri())],
@@ -821,14 +821,11 @@ impl Viewer {
                     .file_name()
                     .map(|n| n.to_string_lossy().into_owned())
                     .unwrap_or_default();
-                let dialog = self
-                    .password
-                    .get_or_init(|| PasswordDialog::new(&self.window));
                 let weak = Rc::downgrade(self);
-                dialog.ask(&name, wrong, move |pw| {
+                dialogs::ask_password(&self.password_window, &name, wrong, move |pw| {
                     if let Some(v) = weak.upgrade() {
                         // Fokus zurück ans Dokumentfenster (labwc gibt ihn
-                        // nach dem Verbergen des Dialogs sonst weiter)
+                        // nach dem Schließen des Dialogs sonst weiter)
                         v.window.present();
                         v.load(path.clone(), Some(pw));
                     }
@@ -1258,7 +1255,7 @@ impl Viewer {
                         &v.window,
                         doc,
                         v.print_settings.clone(),
-                        v.error_window().clone(),
+                        v.error_window.clone(),
                     );
                 }
             }),
@@ -1267,10 +1264,7 @@ impl Viewer {
             "properties",
             Box::new(|v| {
                 if let Some(doc) = v.view.document() {
-                    let w = v
-                        .properties_window
-                        .get_or_init(|| dialogs::window(&v.window, false));
-                    properties::show(w, &doc);
+                    properties::show(&v.properties_window, &doc);
                 }
             }),
         );
@@ -1381,10 +1375,7 @@ impl Viewer {
         add(
             "about",
             Box::new(|v| {
-                let w = v
-                    .about_window
-                    .get_or_init(|| dialogs::window(&v.window, true));
-                dialogs::show_about(w);
+                dialogs::show_about(&v.about_window);
             }),
         );
         for name in ["toolbar", "statusbar", "sidebar"] {

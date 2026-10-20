@@ -48,9 +48,9 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 
 | | |
 |---|---|
-| Version | 0.1.0 (Tag `dokumente/0.1.0`) |
-| Auf der Entwicklungs-VM | live seit 20.10.2026, Standard für PDF |
-| Letzte Prüfung | 20.10.2026: 47 Unit-Tests; GUI-Szenario mit 49 Schritten je de/en × 1024×768/1920×1080 (isoliert), Messung mit 500 Seiten, Probe des Integrationsskripts 165/0 |
+| Version | 0.1.1 (Tag `dokumente/0.1.1`; Nebenfenster neu bauen, QD-076) |
+| Auf der Entwicklungs-VM | live seit 20.10.2026 (zuerst 0.1.0, dann 0.1.1), Standard für PDF |
+| Letzte Prüfung | 20.10.2026 (0.1.1): 47 Unit-Tests; Nebenfenster je 3× geöffnet, de/en × 1024×768/1920×1080, gegen 0.1.0 (isoliert). 0.1.0: GUI-Szenario mit 49 Schritten je de/en × 1024×768/1920×1080 (isoliert), Messung mit 500 Seiten, Probe des Integrationsskripts 165/0 |
 | Bekannte Lücken | siehe [docs/testing.md](docs/testing.md), Abschnitt „Nicht getestet“ |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Poppler 26.01, Rust 1.93 |
 | Nicht getestet | andere Distributionen, HiDPI, Mehrmonitor, echte Drucker |
