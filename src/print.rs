@@ -45,7 +45,7 @@ pub fn run(
     parent: &gtk::ApplicationWindow,
     doc: Rc<Doc>,
     settings: Rc<RefCell<Option<gtk::PrintSettings>>>,
-    error_window: gtk::Window,
+    errors: dialogs::Slot,
 ) {
     let op = gtk::PrintOperation::new();
     op.set_n_pages(doc.n_pages() as i32);
@@ -103,7 +103,7 @@ pub fn run(
         page.render_for_printing(&cr);
     });
     let name = doc.file_name();
-    let errors = error_window.clone();
+    let done_errors = errors.clone();
     op.connect_done(move |op, result| match result {
         gtk::PrintOperationResult::Apply => {
             settings.replace(op.print_settings());
@@ -114,7 +114,7 @@ pub fn run(
                 .map(|e| e.message().to_string())
                 .unwrap_or_default();
             dialogs::show_error(
-                &errors,
+                &done_errors,
                 &gettext_f("Failed to print document “{name}”.", &[("name", &name)]),
                 &detail,
             );
@@ -123,7 +123,7 @@ pub fn run(
     });
     if let Err(err) = op.run(gtk::PrintOperationAction::PrintDialog, Some(parent)) {
         dialogs::show_error(
-            &error_window,
+            &errors,
             &gettext("Failed to print document."),
             err.message(),
         );

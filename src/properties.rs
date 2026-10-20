@@ -1,8 +1,9 @@
 //! „Properties“ („Eigenschaften“): Metadaten des Dokuments wie in Evince 2.30
 //! (Titel, Ort, Thema, Autor, Stichwörter, Ersteller, Erzeugt mit, Datum,
 //! Seitenzahl, Format, Sicherheit, Papiergröße) und die Dateigröße.
-//! Ein gewöhnliches Fenster (labwc-Dekoration), Escape schließt; es wird
-//! einmal angelegt und nur verborgen (GTK-4.22-Falle, siehe dialogs.rs).
+//! Ein gewöhnliches Fenster (labwc-Dekoration), Escape schließt; es wird bei
+//! jedem Öffnen neu gebaut und beim Schließen zerstört (QD-076, siehe
+//! dialogs.rs).
 
 use gtk::prelude::*;
 use gtk::{gio, glib};
@@ -140,8 +141,11 @@ pub fn rows(doc: &Doc, p: &Properties) -> Vec<(String, String)> {
     rows
 }
 
-/// Zeigt die Eigenschaften im (wiederverwendeten) Fenster `window`.
-pub fn show(window: &gtk::Window, doc: &Doc) {
+/// Zeigt die Eigenschaften im offenen Fenster von `slot` (neuer Inhalt) oder
+/// in einem neu gebauten.
+pub fn show(slot: &dialogs::Slot, doc: &Doc) {
+    let Some(window) = slot.window() else { return };
+    let window = &window;
     let rows = rows(doc, &doc.properties());
     let grid = gtk::Grid::builder()
         .row_spacing(4)
