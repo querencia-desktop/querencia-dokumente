@@ -98,22 +98,27 @@ schritt info-zu "key Escape"
 # Öffnen-Dialog
 schritt oeffnen "chord ctrl o" "wait 1500"
 schritt oeffnen-zu "key Escape" "wait 800"
-# Drucken in eine Datei: Druckdialog (ohne CUPS-Drucker ist „In Datei drucken“
-# vorgewählt), Eingabetaste druckt nach $HOME im Profil
-touch "$L/vor-druck"
-schritt drucken-dialog "chord ctrl p" "wait 2500"
-# Fokus steht auf dem Reiter „Allgemein“: Tab in die Druckerliste, ↓ wählt
-# „In Datei drucken“ (einziger Eintrag), die Zugriffstaste des Knopfes
-# „Drucken“/„Print“ druckt
-schritt drucken-wahl "key Tab" "wait 300" "key Down"
-schritt drucken-fertig "chord alt $DRUCK" "wait 4000"
-DRUCK=$(find "$QD_PROFILE/home" -name '*.pdf' -newer "$L/vor-druck" -not -path '*/pdf/*' | head -1)
-if [ -n "$DRUCK" ]; then
-    echo "druck: $DRUCK $(python3 -I "$W/pdfseiten.py" "$DRUCK") Seiten" >>"$L/ablauf.log"
-    cp "$DRUCK" "$OUT/druck-$SPR-$RES.pdf"
+# OHNE_DRUCK=1 (Nachkontrolle über den Live-Link): kein Druckdialog
+if [ "${OHNE_DRUCK:-}" = 1 ]; then
+    echo "druck: übersprungen (OHNE_DRUCK=1)" >>"$L/ablauf.log"
 else
-    echo "druck: keine Datei" >>"$L/ablauf.log"
-    schritt drucken-abbruch "key Escape"
+    # Drucken in eine Datei: Druckdialog (ohne CUPS-Drucker ist „In Datei drucken“
+    # vorgewählt), Eingabetaste druckt nach $HOME im Profil
+    touch "$L/vor-druck"
+    schritt drucken-dialog "chord ctrl p" "wait 2500"
+    # Fokus steht auf dem Reiter „Allgemein“: Tab in die Druckerliste, ↓ wählt
+    # „In Datei drucken“ (einziger Eintrag), die Zugriffstaste des Knopfes
+    # „Drucken“/„Print“ druckt
+    schritt drucken-wahl "key Tab" "wait 300" "key Down"
+    schritt drucken-fertig "chord alt $DRUCK" "wait 4000"
+    DRUCK=$(find "$QD_PROFILE/home" -name '*.pdf' -newer "$L/vor-druck" -not -path '*/pdf/*' | head -1)
+    if [ -n "$DRUCK" ]; then
+        echo "druck: $DRUCK $(python3 -I "$W/pdfseiten.py" "$DRUCK") Seiten" >>"$L/ablauf.log"
+        cp "$DRUCK" "$OUT/druck-$SPR-$RES.pdf"
+    else
+        echo "druck: keine Datei" >>"$L/ablauf.log"
+        schritt drucken-abbruch "key Escape"
+    fi
 fi
 # Fehlermeldung: zweiter Aufruf mit kaputter Datei → neues Fenster mit Meldung
 "$BIN" "$T/kaputt.pdf" >>"$L/app2.log" 2>&1
