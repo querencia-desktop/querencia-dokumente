@@ -16,8 +16,10 @@ bash werkzeug/bauen.sh pruefen    # nur fmt, Clippy, Tests
 bash werkzeug/bauen.sh release    # nur Release
 ```
 
-- Alles läuft hinter `flock ~/.local/state/querencia/bau.lock` mit
-  `nice -n 10`, `CARGO_BUILD_JOBS=4` und eigenem `TMPDIR` (`tmp/`).
+- Alles läuft auf einem der zwei gemeinsamen Bau-Plätze
+  (`~/.local/state/querencia/bau-platz.sh`, setzt `nice -n 10` und
+  `CARGO_BUILD_JOBS=4`) mit eigenem `TMPDIR` (`tmp/`). GUI- und Messläufe
+  laufen nie unter einem Bau-Platz.
 - Der Release-Build läuft mit
   `--remap-path-prefix=<repo>=/usr/src/querencia-dokumente` und
   `--remap-path-prefix=<CARGO_HOME>=/usr/share/cargo` (wie
