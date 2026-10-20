@@ -1,0 +1,35 @@
+[package]
+name = "querencia-dokumente"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+description = "Querencia Dokumente: klassischer PDF-Betrachter für Querencia Desktop"
+license = "GPL-3.0-or-later"
+publish = false
+
+[dependencies]
+# Dieselben Bindings wie die übrigen Querencia-Programme (gtk-rs 0.11).
+gtk = { package = "gtk4", version = "0.11", features = ["v4_12"] }
+# PDF über das System-Poppler (libpoppler-glib, GPL-2 oder GPL-3): Das
+# gelinkte Programm steht deshalb unter GPL-3.0-or-later (README, „Lizenz“).
+# v20_9: Datumsangaben als GDateTime (Ubuntu 26.04 hat Poppler 26.01).
+poppler = { package = "poppler-rs", version = "0.26", features = ["v20_9"] }
+cairo = { package = "cairo-rs", version = "0.22" }
+# Ergebnisse der Hintergrundfäden zurück in die GTK-Hauptschleife.
+futures-channel = "0.3"
+futures-util = { version = "0.3", default-features = false }
+# Übersetzungen über GNU gettext (po/, .mo unter share/locale). Feature
+# gettext-system: das gettext der glibc statt eines mitgebauten libintl.
+gettext-rs = { version = "0.8", features = ["gettext-system"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+
+[lints.rust]
+unsafe_code = "forbid"
+unused_must_use = "deny"
+
+[dev-dependencies]
+# Tests erzeugen ihre PDFs selbst (Cairo-PDF-Ausgabe, nur in Tests).
+cairo = { package = "cairo-rs", version = "0.22", features = ["pdf", "v1_16"] }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title description">
+  <title id="title">Querencia Dokumente</title>
+  <desc id="description">Blatt mit umgeknickter Ecke, Überschrift in Querencia-Orange (#F07746) und grauen Textzeilen, flächig (Entwurf Dokumente 0.1.0 im Stil von G2-V).</desc>
+  <!-- Blatt, oben rechts geknickt -->
+  <path d="M12 4 H40 L54 18 V58 A2 2 0 0 1 52 60 H12 A2 2 0 0 1 10 58 V6 A2 2 0 0 1 12 4 Z" fill="#f4f3f1" stroke="#5a5a5a" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Eselsohr -->
+  <path d="M40 4 V16 A2 2 0 0 0 42 18 H54 Z" fill="#c9c6c2" stroke="#5a5a5a" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Überschrift -->
+  <rect x="17" y="12" width="17" height="6" rx="2" fill="#F07746"/>
+  <!-- Textzeilen -->
+  <rect x="17" y="26" width="30" height="4" rx="2" fill="#9a9a9a"/>
+  <rect x="17" y="34" width="30" height="4" rx="2" fill="#9a9a9a"/>
+  <rect x="17" y="42" width="30" height="4" rx="2" fill="#9a9a9a"/>
+  <rect x="17" y="50" width="19" height="4" rx="2" fill="#9a9a9a"/>
+</svg>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Querencia Dokumente 0.1.0 (QD-019). Muster: querencia-packaging/common/metainfo
+     (SW-5); zweisprachig von Hand wie die übrigen MetaInfo-Dateien
+     (i18n-Muster §6), Metadaten unter FSFAP. -->
+<component type="desktop-application">
+  <id>org.querencia.Dokumente</id>
+  <name>Querencia Documents</name>
+  <name xml:lang="de">Querencia Dokumente</name>
+  <summary>View PDF documents</summary>
+  <summary xml:lang="de">PDF-Dokumente ansehen</summary>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="org.querencia">
+    <name>Querencia Desktop</name>
+    <name xml:lang="de">Querencia Desktop</name>
+  </developer>
+  <project_group>Querencia</project_group>
+  <description>
+    <p>Querencia Documents is the document viewer of Querencia Desktop. It shows PDF files page after page with a classic menu bar, a toolbar with page entry and zoom, a side pane with thumbnails, text search with highlighted matches, copying of selected text, document properties, printing and full screen.</p>
+    <p xml:lang="de">Querencia Dokumente ist der Dokumentenbetrachter von Querencia Desktop. Er zeigt PDF-Dateien fortlaufend mit klassischer Menüleiste, Werkzeugleiste mit Seitenfeld und Zoom, Seitenleiste mit Miniaturen, Textsuche mit hervorgehobenen Treffern, Kopieren markierten Textes, Dokumenteigenschaften, Drucken und Vollbild.</p>
+    <p>Password protected documents are supported. Documents are only displayed, never modified or saved.</p>
+    <p xml:lang="de">Passwortgeschützte Dokumente werden unterstützt. Dokumente werden nur angezeigt, nie verändert oder gespeichert.</p>
+  </description>
+  <url type="homepage">https://querencialinux.org</url>
+  <launchable type="desktop-id">org.querencia.Dokumente.desktop</launchable>
+  <provides>
+    <binary>querencia-dokumente</binary>
+    <mediatype>application/pdf</mediatype>
+  </provides>
+  <pkgname>querencia-dokumente</pkgname>
+  <categories>
+    <category>Office</category>
+    <category>Viewer</category>
+  </categories>
+  <keywords>
+    <keyword>PDF</keyword>
+    <keyword>document</keyword>
+    <keyword>viewer</keyword>
+    <keyword xml:lang="de">PDF</keyword>
+    <keyword xml:lang="de">Dokument</keyword>
+    <keyword xml:lang="de">Betrachter</keyword>
+    <keyword xml:lang="de">Dokumentenbetrachter</keyword>
+  </keywords>
+  <content_rating type="oars-1.1"/>
+  <branding>
+    <color type="primary" scheme_preference="light">#F07746</color>
+    <color type="primary" scheme_preference="dark">#B8532B</color>
+  </branding>
+  <releases>
+    <release version="0.1.0" date="2026-10-20"/>
+  </releases>
+</component>

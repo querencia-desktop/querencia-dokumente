@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Eingebettete Ressourcen von Querencia Dokumente. Neu erzeugen (aus dem Repo-Wurzelverzeichnis):
+     glib-compile-resources --sourcedir=data/icons/hicolor/scalable/apps \
+       --target=data/resource/dokumente.gresource data/resource/dokumente.gresource.xml
+     Der Unit-Test resource::tests prüft, dass die Ressource zum SVG passt. -->
+<gresources>
+  <gresource prefix="/org/querencia/Dokumente">
+    <file alias="icons/scalable/apps/org.querencia.Dokumente-info.svg">org.querencia.Dokumente.svg</file>
+  </gresource>
+</gresources>

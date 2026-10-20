@@ -1,0 +1,503 @@
+# Übersetzungsvorlage für Querencia Dokumente.
+# Copyright (C) 2026 Querencia
+# Diese Datei steht unter derselben Lizenz wie Querencia Dokumente (GPL-3.0-or-later).
+# Erzeugt mit werkzeug/i18n.py pot – nicht von Hand bearbeiten.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: querencia-dokumente\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Name
+#. TRANSLATORS: Desktop-Datei, Schlüssel GenericName
+#: data/org.querencia.Dokumente.desktop.in:12 data/org.querencia.Dokumente.desktop.in:13
+msgid "Document Viewer"
+msgstr ""
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Comment
+#: data/org.querencia.Dokumente.desktop.in:14
+msgid "View PDF documents"
+msgstr ""
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Keywords (Liste, Einträge mit ; trennen und abschließen)
+#: data/org.querencia.Dokumente.desktop.in:21
+msgid "PDF;Document;Viewer;Reader;"
+msgstr ""
+
+#: src/dialogs.rs:44
+msgid "_Close"
+msgstr ""
+
+#: src/dialogs.rs:92
+msgid "Error"
+msgstr ""
+
+#: src/dialogs.rs:110
+msgid "Enter password"
+msgstr ""
+
+#: src/dialogs.rs:117
+msgid "Password required"
+msgstr ""
+
+#: src/dialogs.rs:124
+msgid "_Password:"
+msgstr ""
+
+#: src/dialogs.rs:148
+msgid "_Cancel"
+msgstr ""
+
+#: src/dialogs.rs:149
+msgid "_Unlock Document"
+msgstr ""
+
+#: src/dialogs.rs:192
+#, no-c-format
+msgid ""
+"The document “{name}” is locked and requires a password before it can be opened."
+msgstr ""
+
+#: src/dialogs.rs:197
+msgid "Password was incorrect. Please try again."
+msgstr ""
+
+#: src/dialogs.rs:211
+#, no-c-format
+msgid "About {name}"
+msgstr ""
+
+#: src/dialogs.rs:226
+msgid ""
+"Classic document viewer for Querencia Desktop\n"
+"modelled on Evince 2.30.\n"
+"\n"
+"Documents are only displayed, never changed.\n"
+"Alpha – not released for everyday use."
+msgstr ""
+
+#: src/dialogs.rs:231
+msgid ""
+"License: GNU GPL, version 3 or later\n"
+"PDF rendering: Poppler (GPL)"
+msgstr ""
+
+#. TRANSLATORS: Dezimalzeichen in Dateigröße und Seitenmaß („2.9 kB“, „215.9 × 279.4 mm“)
+#: src/i18n.rs:79
+msgctxt "decimal separator"
+msgid "."
+msgstr ""
+
+#: src/i18n.rs:159 src/i18n.rs:160 src/properties.rs:73
+#, no-c-format
+msgid "{n} byte"
+msgid_plural "{n} bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/print.rs:90
+#, no-c-format
+msgid "Failed to print document “{name}”."
+msgstr ""
+
+#: src/print.rs:99
+msgid "Failed to print document."
+msgstr ""
+
+#. TRANSLATORS: Papiergröße mit Formatname, z. B. „210 × 297 mm (A4)“
+#: src/properties.rs:47
+#, no-c-format
+msgid "{width} × {height} mm ({paper})"
+msgstr ""
+
+#. TRANSLATORS: Papiergröße eines quer liegenden Normformats
+#: src/properties.rs:52
+#, no-c-format
+msgid "{width} × {height} mm ({paper}, landscape)"
+msgstr ""
+
+#: src/properties.rs:57
+#, no-c-format
+msgid "{width} × {height} mm"
+msgstr ""
+
+#. TRANSLATORS: Datum und Uhrzeit, Format von g_date_time_format (%d Tag, %m Monat, %Y Jahr, %H:%M Uhrzeit)
+#: src/properties.rs:88
+msgid "%Y-%m-%d %H:%M"
+msgstr ""
+
+#: src/properties.rs:95
+msgid "None"
+msgstr ""
+
+#: src/properties.rs:96
+msgid "Title"
+msgstr ""
+
+#: src/properties.rs:99
+msgid "Location"
+msgstr ""
+
+#: src/properties.rs:101
+msgid "File"
+msgstr ""
+
+#: src/properties.rs:103
+msgid "Subject"
+msgstr ""
+
+#: src/properties.rs:104
+msgid "Author"
+msgstr ""
+
+#: src/properties.rs:105
+msgid "Keywords"
+msgstr ""
+
+#: src/properties.rs:106
+msgid "Creator"
+msgstr ""
+
+#: src/properties.rs:107
+msgid "Producer"
+msgstr ""
+
+#: src/properties.rs:114
+msgid "Created"
+msgstr ""
+
+#: src/properties.rs:117
+msgid "Modified"
+msgstr ""
+
+#: src/properties.rs:119
+msgid "Number of Pages"
+msgstr ""
+
+#: src/properties.rs:121
+msgid "Format"
+msgstr ""
+
+#: src/properties.rs:124
+msgid "Security"
+msgstr ""
+
+#. TRANSLATORS: Eigenschaften, Zeile „Sicherheit“ bei Kennwortschutz
+#: src/properties.rs:127
+msgctxt "security"
+msgid "Password protected"
+msgstr ""
+
+#: src/properties.rs:133
+msgid "Paper Size"
+msgstr ""
+
+#: src/properties.rs:142
+msgid "File Size"
+msgstr ""
+
+#. TRANSLATORS: Bezeichnung einer Zeile in den Eigenschaften, fett
+#: src/properties.rs:159
+#, no-c-format
+msgid "{label}:"
+msgstr ""
+
+#: src/properties.rs:172
+msgid "Properties"
+msgstr ""
+
+#. TRANSLATORS: Eintrag im Menü „Zuletzt geöffnet“: Nummer und Dateiname
+#: src/recent.rs:60
+#, no-c-format
+msgid "_{number}. {name}"
+msgstr ""
+
+#: src/recent.rs:77
+msgid "No recent documents"
+msgstr ""
+
+#: src/viewer.rs:132
+msgid "_Open…"
+msgstr ""
+
+#: src/viewer.rs:134
+msgid "Open Rece_nt"
+msgstr ""
+
+#: src/viewer.rs:136
+msgid "_Print…"
+msgstr ""
+
+#: src/viewer.rs:137
+msgid "P_roperties"
+msgstr ""
+
+#. TRANSLATORS: Menü „Datei“; Knöpfe in Dialogen nehmen „_Close“ ohne Kontext
+#: src/viewer.rs:140
+msgctxt "File menu"
+msgid "_Close"
+msgstr ""
+
+#: src/viewer.rs:141
+msgid "_Quit"
+msgstr ""
+
+#: src/viewer.rs:150
+msgid "_File"
+msgstr ""
+
+#: src/viewer.rs:152
+msgid "_Edit"
+msgstr ""
+
+#: src/viewer.rs:155
+msgid "_Copy"
+msgstr ""
+
+#: src/viewer.rs:156
+msgid "Select _All"
+msgstr ""
+
+#: src/viewer.rs:159
+msgid "_Find…"
+msgstr ""
+
+#: src/viewer.rs:160 src/viewer.rs:429
+msgid "Find Ne_xt"
+msgstr ""
+
+#: src/viewer.rs:161
+msgid "Find Pre_vious"
+msgstr ""
+
+#: src/viewer.rs:166
+msgid "_View"
+msgstr ""
+
+#: src/viewer.rs:169
+msgid "_Toolbar"
+msgstr ""
+
+#: src/viewer.rs:170
+msgid "_Statusbar"
+msgstr ""
+
+#: src/viewer.rs:171
+msgid "Side _Pane"
+msgstr ""
+
+#: src/viewer.rs:174
+msgid "_Zoom In"
+msgstr ""
+
+#: src/viewer.rs:175
+msgid "Zoom _Out"
+msgstr ""
+
+#: src/viewer.rs:176
+msgid "_Normal Size"
+msgstr ""
+
+#: src/viewer.rs:177
+msgid "_Best Fit"
+msgstr ""
+
+#: src/viewer.rs:178
+msgid "Fit Page _Width"
+msgstr ""
+
+#: src/viewer.rs:180
+msgid "_Fullscreen"
+msgstr ""
+
+#: src/viewer.rs:184
+msgid "_Go"
+msgstr ""
+
+#: src/viewer.rs:187
+msgid "_Previous Page"
+msgstr ""
+
+#: src/viewer.rs:188
+msgid "_Next Page"
+msgstr ""
+
+#: src/viewer.rs:191
+msgid "_First Page"
+msgstr ""
+
+#: src/viewer.rs:192
+msgid "_Last Page"
+msgstr ""
+
+#: src/viewer.rs:194
+msgid "_Go to Page…"
+msgstr ""
+
+#: src/viewer.rs:198
+msgid "_Help"
+msgstr ""
+
+#: src/viewer.rs:199
+msgid "_About"
+msgstr ""
+
+#: src/viewer.rs:214 src/viewer.rs:1040
+msgid "Best Fit"
+msgstr ""
+
+#: src/viewer.rs:215 src/viewer.rs:1041
+msgid "Fit Page Width"
+msgstr ""
+
+#: src/viewer.rs:333
+msgid "Open a document"
+msgstr ""
+
+#: src/viewer.rs:338
+msgid "Print this document"
+msgstr ""
+
+#: src/viewer.rs:344
+msgid "Go to the previous page"
+msgstr ""
+
+#: src/viewer.rs:349
+msgid "Go to the next page"
+msgstr ""
+
+#: src/viewer.rs:357
+msgid "Select page"
+msgstr ""
+
+#: src/viewer.rs:367
+msgid "Shrink the document"
+msgstr ""
+
+#: src/viewer.rs:372
+msgid "Enlarge the document"
+msgstr ""
+
+#: src/viewer.rs:377
+msgid "Adjust the zoom level"
+msgstr ""
+
+#: src/viewer.rs:385
+msgid "Find a word or phrase in the document"
+msgstr ""
+
+#. TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
+#: src/viewer.rs:407
+msgid ""
+"No document loaded.\n"
+"\n"
+"File → Open… (Ctrl+O)"
+msgstr ""
+
+#: src/viewer.rs:420
+msgid "Close the find bar"
+msgstr ""
+
+#: src/viewer.rs:422
+msgid "Fi_nd:"
+msgstr ""
+
+#: src/viewer.rs:426
+msgid "Find _Previous"
+msgstr ""
+
+#: src/viewer.rs:432
+msgid "C_ase Sensitive"
+msgstr ""
+
+#: src/viewer.rs:728 src/viewer.rs:756
+#, no-c-format
+msgid "Unable to open document “{name}”."
+msgstr ""
+
+#: src/viewer.rs:730
+#, no-c-format
+msgid ""
+"The file could not be read.\n"
+"\n"
+"Details: {detail}"
+msgstr ""
+
+#: src/viewer.rs:735
+msgid "The file is damaged or is not a PDF document."
+msgstr ""
+
+#: src/viewer.rs:737
+#, no-c-format
+msgid ""
+"The file is damaged or is not a PDF document.\n"
+"\n"
+"Details: {detail}"
+msgstr ""
+
+#: src/viewer.rs:742
+msgid "The document is password protected."
+msgstr ""
+
+#: src/viewer.rs:760
+msgid "Only local files are supported."
+msgstr ""
+
+#: src/viewer.rs:1028
+#, no-c-format
+msgid "of {count}"
+msgstr ""
+
+#. TRANSLATORS: Statusleiste, aktuelle Seite
+#: src/viewer.rs:1029
+#, no-c-format
+msgid "Page {index} of {count}"
+msgstr ""
+
+#: src/viewer.rs:1160
+msgid "Searching…"
+msgstr ""
+
+#: src/viewer.rs:1161
+msgid "Not found"
+msgstr ""
+
+#. TRANSLATORS: Suchleiste, aktueller Treffer
+#: src/viewer.rs:1162
+#, no-c-format
+msgid "Match {index} of {count}"
+msgstr ""
+
+#: src/viewer.rs:1168
+#, no-c-format
+msgid "{n} match"
+msgid_plural "{n} matches"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/viewer.rs:1384
+msgid "PDF Documents"
+msgstr ""
+
+#: src/viewer.rs:1388
+msgid "All Files"
+msgstr ""
+
+#: src/viewer.rs:1394
+msgid "Open Document"
+msgstr ""
+
+#. TRANSLATORS: Zoomstufe; {value} ist eine ganze Zahl („125“)
+#: src/zoom.rs:78
+#, no-c-format
+msgid "{value}%"
+msgstr ""
