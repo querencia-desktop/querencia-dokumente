@@ -49,6 +49,7 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 | | |
 |---|---|
 | Version | 0.1.0 (Tag `dokumente/0.1.0`) |
+| Auf der Entwicklungs-VM | live seit 20.10.2026, Standard für PDF |
 | Letzte Prüfung | 20.10.2026: 47 Unit-Tests; GUI-Szenario mit 49 Schritten je de/en × 1024×768/1920×1080 (isoliert), Messung mit 500 Seiten, Probe des Integrationsskripts 165/0 |
 | Bekannte Lücken | siehe [docs/testing.md](docs/testing.md), Abschnitt „Nicht getestet“ |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Poppler 26.01, Rust 1.93 |
@@ -56,43 +57,10 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 
 Änderungen: [CHANGELOG.md](CHANGELOG.md).
 
-## Bauen
+## Bauen und Prüfen
 
-Voraussetzungen (Ubuntu 26.04):
-
-```bash
-sudo apt install build-essential pkg-config rustc cargo libgtk-4-dev libpoppler-glib-dev gettext
-```
-
-```bash
-cargo build --release --locked
-```
-
-Das Ergebnis liegt unter `target/release/querencia-dokumente`. Ausführliche
-Hinweise (Pfade im Binary, Übersetzungen, Symbol, Paket):
-[docs/building.md](docs/building.md).
-
-## Prüfen
-
-```bash
-cargo fmt --all --check
-cargo clippy --all-targets --locked -- -D warnings
-cargo test --locked
-python3 werkzeug/i18n.py pruefen
-```
-
-Diese Befehle laufen ohne Bildschirm; die ersten drei sind auch die CI
-(`.github/workflows/ci.yml`). Die Tests erzeugen ihre PDFs selbst (Cairo)
-und prüfen Öffnen, Fehlerarten, Passwort, Textauswahl, Rendern und Suche im
-Hintergrundfaden. Die **GUI-Prüfung** läuft in einer abgeschotteten Sitzung
-(eigener labwc ohne Bildschirm, eigenes `HOME` und `XDG_RUNTIME_DIR`, Drucken
-nur in eine Datei), niemals in der laufenden Desktopsitzung:
-
-```bash
-bash werkzeug/lauf.sh de 1024x768
-```
-
-Fälle, Ablauf und Belege: [docs/testing.md](docs/testing.md).
+`cargo build --release --locked`, danach `cargo fmt --all --check`, `cargo clippy --all-targets --locked -- -D warnings`, `cargo test --locked` und `python3 werkzeug/i18n.py pruefen` (laufen ohne Bildschirm; die ersten drei sind die CI `.github/workflows/ci.yml`).
+Voraussetzungen, Pfade, Übersetzungen, Paket: [docs/building.md](docs/building.md); isolierte GUI-Prüfung (`bash werkzeug/lauf.sh de 1024x768`, nie in der laufenden Sitzung) und Messung: [docs/testing.md](docs/testing.md); Integration: [docs/integration.md](docs/integration.md).
 
 ## Vorbild und Abgrenzung
 
