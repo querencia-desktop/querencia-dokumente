@@ -55,7 +55,7 @@ bash werkzeug/quelle.sh target/remap/release/querencia-dokumente "$PWD/gui-test/
 `LANGUAGE=en`. Gestartet wird ein Link auf eine Ablage-Kopie mit
 `share/locale`; im de-Lauf muss `/proc/<pid>/maps` den Katalog nennen.
 
-`werkzeug/szenario.sh` (52 Schritte): fünf Menüs und „Zuletzt geöffnet“,
+`werkzeug/szenario.sh` (49 Schritte): fünf Menüs und „Zuletzt geöffnet“,
 Blättern (Bild↓, Ende, Pos1, Pfeile), Seitenfeld (Strg+L, Seite 5 quer),
 Zoom (Strg+0, Strg+Plus, Strg+Minus, Ganze Seite, Strg+Mausrad,
 Seitenbreite), Suche (Treffer, weiter, zurück, viele Treffer, F3), Auswahl

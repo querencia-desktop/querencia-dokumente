@@ -126,7 +126,10 @@ schritt passwort-falsch "type falsch" "key Return" "wait 800"
 schritt passwort-richtig "type querencia" "key Return" "wait 1500"
 schritt passwort-zu "chord ctrl w"
 # Ende: Strg+Q beendet das Programm
-q "chord ctrl q" "wait 2500"
+q "chord ctrl q"
+T1=$(date +%s%N)
+for i in $(seq 1 100); do kill -0 "$PID" 2>/dev/null || break; sleep 0.1; done
+echo "Strg+Q bis Prozessende: $(( ($(date +%s%N) - T1) / 1000000 )) ms" >>"$L/ablauf.log"
 if kill -0 "$PID" 2>/dev/null; then
     echo "ENDE Strg+Q: läuft noch" >"$L/status.txt"
 else
