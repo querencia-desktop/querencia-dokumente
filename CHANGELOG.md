@@ -11,7 +11,7 @@ steht als „unfertig“ da.
 - Wird ein offenes PDF neu geschrieben (etwa von WeasyPrint, das die Datei
   kürzt und neu schreibt), zeigt die Hauptansicht keine weißen Seiten mehr,
   während die Seitenleiste noch Miniaturen der alten Fassung zeigt (Befund
-  21.10.2026, Seite 5 des Marketingpakets). Poppler las die neue Datei mit
+  21.10.2026). Poppler las die neue Datei mit
   den Objekt-Offsets der alten und zeichnete nichts. Dokumente merkt sich
   beim Öffnen einen Dateistempel (Gerät, Inode, Größe, Änderungszeit); der
   Renderfaden prüft ihn vor und nach jedem Bild und gibt nach einer
@@ -41,7 +41,7 @@ steht als „unfertig“ da.
 
 ### Behoben
 - Unter „Dunkle Darstellung bevorzugen“ startet Dokumente dunkel, sobald
-  das Thema eine dunkle Fassung hat (Querencia-Klassisch ab 0.2, QD-081):
+  das Thema eine dunkle Fassung hat (Querencia-Klassisch ab 0.2):
   GTK 4.22 lädt das dunkle Thema-CSS sonst nur bei einem Wechsel im
   laufenden Programm. Dokumente meldet `gtk-interface-color-scheme` einmal
   beim Start. Hell ändert sich nichts.
@@ -57,7 +57,7 @@ steht als „unfertig“ da.
 ### Behoben
 - Die Fenster „Fehler“, „Eigenschaften“ (Alt+Eingabe), „Info“ und die
   Passwortabfrage haben bei jedem Öffnen eine Titelleiste, nicht nur beim
-  ersten (QD-076). Sie werden beim Schließen zerstört und beim Öffnen neu
+  ersten. Sie werden beim Schließen zerstört und beim Öffnen neu
   gebaut, statt verborgen und wieder gezeigt zu werden: labwc 0.9.8
   verknüpft die Dekorationsanfrage nur mit dem ersten xdg_toplevel einer
   Fläche, GTK 4.22 legt beim Wiederzeigen ein neues an. Muster Querencia
@@ -74,7 +74,7 @@ steht als „unfertig“ da.
 
 ## [0.1.0] – 2026-10-20
 
-Erste interne Alpha (QD-019). Liest PDF-Dateien wie Evince 2.30; bearbeitet
+Erste interne Alpha. Liest PDF-Dateien wie Evince 2.30; bearbeitet
 nichts.
 
 ### Hinzugefügt

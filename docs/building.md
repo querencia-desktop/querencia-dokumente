@@ -75,4 +75,4 @@ PNG-Satz der App-ID im Symbolthema liegt (GTK-4.22-Symbolabsturz).
 - `/usr/share/icons/hicolor/{16…256,scalable}/apps/org.querencia.Dokumente.*`
 - `/usr/share/metainfo/org.querencia.Dokumente.metainfo.xml`
 - Abhängigkeit `libpoppler-glib8t64`; `debian/copyright` mit dem Hinweis
-  „gelinkt gegen Poppler (GPL-2|3)“ (LIZENZEN.md §4).
+  „gelinkt gegen Poppler (GPL-2|3)“ (siehe `COPYRIGHT`).

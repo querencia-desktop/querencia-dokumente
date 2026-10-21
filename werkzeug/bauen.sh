@@ -1,7 +1,7 @@
 #!/bin/bash
 # Querencia Dokumente: fmt, Clippy, Tests und Release-Build auf einem der
 # gemeinsamen Bau-Plätze (~/.local/state/querencia/bau-platz.sh: nice 10,
-# 4 Jobs; Regel der Startsession seit 20.10.2026) – offline, eigener TMPDIR.
+# 4 Jobs; Projektregel seit 20.10.2026) – offline, eigener TMPDIR.
 # Der Release-Build läuft mit --remap-path-prefix (Repo → /usr/src/…,
 # Cargo-Home → /usr/share/cargo, wie querencia-packaging), damit keine
 # Home-Pfade im Binary stehen; geprüft wird das am Ende mit strings.

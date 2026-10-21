@@ -2,8 +2,10 @@
 
 Klassischer PDF-Betrachter für alle, die Dokumente lesen, durchsuchen und
 drucken wollen. Teil von
-[Querencia Desktop](https://github.com/querencia-desktop/querencia) – einer
+[Querencia Desktop](https://querencialinux.org) – einer
 klassischen Desktopumgebung im GNOME-2-Stil für Wayland (labwc, Rust, GTK 4).
+Installiert wird es zusammen mit Querencia Desktop aus der APT-Quelle;
+Anleitung auf <https://querencialinux.org>.
 
 *English summary:* A classic PDF document viewer modelled on Evince 2.30.
 Part of Querencia Desktop, a classic GNOME-2-style desktop for Wayland.
