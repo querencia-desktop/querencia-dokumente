@@ -5,6 +5,38 @@ nach [Semantic Versioning](https://semver.org/lang/de/). Solange die Hauptversio
 0 ist, kann sich alles ändern. Jede Zeile nennt, was Nutzer merken; Unfertiges
 steht als „unfertig“ da.
 
+## [0.1.3] – 2026-10-21
+
+### Behoben
+- Wird ein offenes PDF neu geschrieben (etwa von WeasyPrint, das die Datei
+  kürzt und neu schreibt), zeigt die Hauptansicht keine weißen Seiten mehr,
+  während die Seitenleiste noch Miniaturen der alten Fassung zeigt (Befund
+  21.10.2026, Seite 5 des Marketingpakets). Poppler las die neue Datei mit
+  den Objekt-Offsets der alten und zeichnete nichts. Dokumente merkt sich
+  beim Öffnen einen Dateistempel (Gerät, Inode, Größe, Änderungszeit); der
+  Renderfaden prüft ihn vor und nach jedem Bild und gibt nach einer
+  Änderung keine Bilder mehr aus.
+
+### Neu
+- Ändert sich die Datei, lädt Dokumente sie neu, sobald sie eine halbe
+  Sekunde ruht (wie Evince); Seite und Zoom bleiben. Eine Dateiüberwachung
+  (GIO) bemerkt Änderungen auch, wenn gerade nichts gerendert wird.
+- Wird die Datei gelöscht oder ist sie nicht mehr lesbar, bleibt die
+  letzte Anzeige stehen; die Statusleiste sagt „Die Datei wurde entfernt
+  oder ist nicht mehr lesbar. Angezeigt wird der zuletzt geladene Stand.“
+  (ein neuer Text, im Katalog übersetzt).
+
+### Für Entwickler
+- `examples/seitenpruefung.rs`: rendert jede Seite wie die Hauptansicht und
+  misst den Anteil nicht-weißer Pixel; `--wirbel N` (zufällige Folge mit
+  Suchfaden), `--umschreiben <neu.pdf>` (Datei ändert sich beim Lesen).
+- Test-PDFs `testdaten/leer-*.pdf` (variable WOFF2 von WeasyPrint 70,
+  Standardschrift, Bild, 30 Seiten in zwei Fassungen) aus
+  `werkzeug/leerseiten-pdfs.py`; Unit-Tests für Überschreiben, Löschen
+  und unveränderte Datei.
+- `werkzeug/leerseiten-szenario.sh` und `werkzeug/leerseiten.py`: isolierte
+  GUI-Probe auf leere Seiten in der Hauptansicht.
+
 ## [0.1.2] – 2026-10-21
 
 ### Behoben

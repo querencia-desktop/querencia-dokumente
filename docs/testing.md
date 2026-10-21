@@ -26,6 +26,12 @@ Die Unit-Tests decken ab:
   Seiten, Ersatzbild in anderem Maßstab.
 - **Öffnen** (`document.rs`): Metadaten, beschädigt, fehlend, Passwort
   (fehlt, falsch, richtig) mit `testdaten/geschuetzt.pdf`.
+- **Datei ändert sich** (`render.rs`, `document.rs`, 0.1.3): Dateistempel
+  unverändert/überschrieben/gelöscht; am selben Inode überschriebene Datei
+  meldet `Changed` statt eines weißen Bildes, nach dem Neuladen haben alle
+  Seiten Inhalt; gelöschte Datei rendert weiter aus der offenen Datei;
+  unveränderte Datei löst nie ein Neuladen aus. Alle Seiten der
+  `testdaten/leer-*.pdf` haben in Hauptansichtsgröße Inhalt.
 - Rendern im Hintergrundfaden (Bildgröße, Grenzen), Druck-Einpassung,
   Papierformate, Katalog vollständig, Ressource aktuell.
 
@@ -79,6 +85,29 @@ Farbe gezählt (`titelleiste.py`), GTK-Meldungen im Programmprotokoll.
 Belege: `nachweis/gui/<name>/` (Bilder, `ablauf.log`, `app.log`,
 `status.txt`, Zwischenablage, Druck-PDF, `messung.txt`).
 
+## Leere Seiten (0.1.3)
+
+Befund 21.10.2026: Hauptansicht weiß, Miniatur mit Inhalt – das offene PDF
+war neu geschrieben worden. Werkzeuge:
+
+```bash
+cargo build --release --example seitenpruefung
+target/release/examples/seitenpruefung <pdf> [maßstab …]          # je Seite Anteil nicht-weiß
+target/release/examples/seitenpruefung <pdf> --wirbel 600 0.18 1.333
+target/release/examples/seitenpruefung testdaten/leer-30.pdf --umschreiben testdaten/leer-30-neu.pdf 1.333
+~/.cache/querencia-pdf-venv/bin/python -I werkzeug/leerseiten-pdfs.py testdaten ~/querencia-web/fonts
+QD_PDF=<pdf> SZENARIO=leerseiten-szenario.sh bash werkzeug/lauf.sh de 1920x1080 <name> [ablage]
+QD_PDF=testdaten/leer-30.pdf QD_PDF_NEU=testdaten/leer-30-neu.pdf QD_TEILE="umschreiben loeschen" \
+  SZENARIO=leerseiten-szenario.sh bash werkzeug/lauf.sh de 1920x1080 umschr [ablage]
+python3 -I werkzeug/leerseiten.py nachweis/gui/<name>                 # LEER je Bild, Exit 1
+```
+
+Das Szenario maximiert das Fenster, setzt 100 % und springt über das
+Seitenfeld zu jeder Seite; weitere Teile: Bild↓, Mausrad, 50 %, 150 %,
+„Ganze Seite“, Seitenleiste (↓ von Miniatur zu Miniatur), Überschreiben und
+Löschen der offenen Datei. `QD_GSK` wählt den GSK-Renderer (leer = wie
+live), `GSK_DEBUG=full-redraw` wie in der Sitzung.
+
 ## Nicht getestet
 
 - Anblick in der echten Sitzung, Panel-Menüeintrag, Doppelklick in Files
@@ -87,4 +116,6 @@ Belege: `nachweis/gui/<name>/` (Bilder, `ablauf.log`, `app.log`,
 - HiDPI (Skalierung > 1), Mehrmonitor
 - sehr große Einzelseiten (Poster) jenseits der Bildgrenzen-Unit-Tests
 - PDFs mit eingebetteten Schriften anderer Erzeuger, Formulare, Anmerkungen
+- Dateien auf Netzlaufwerken (die GIO-Überwachung meldet dort
+  Änderungen womöglich nicht; der Renderfaden prüft den Stempel trotzdem)
 - `LANG=C`: glibc beachtet dann `LANGUAGE` nicht, die Oberfläche wäre englisch

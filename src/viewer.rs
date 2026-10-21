@@ -11,14 +11,14 @@ use std::cell::{Cell, RefCell};
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use futures_util::StreamExt;
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib};
 
 use crate::dialogs;
-use crate::document::{Doc, OpenError};
+use crate::document::{self, Doc, OpenError, Stamp};
 use crate::i18n::{gettext, gettext_f, ngettext_f, pgettext};
 use crate::render::{Job, Message, Renderer, image_size};
 use crate::search::Search;
@@ -294,6 +294,10 @@ pub struct Viewer {
     opened_at: Cell<Option<Instant>>,
     /// Das Fenster ist gezeichnet (siehe open_file).
     shown: Cell<bool>,
+    /// Überwacht die Datei des Dokuments (Neuladen wie Evince, 0.1.3).
+    monitor: RefCell<Option<gio::FileMonitor>>,
+    /// Ein Neuladen wartet, bis die Datei ruht.
+    reload_pending: Cell<bool>,
 }
 
 /// Handler einer Fensteraktion.
@@ -518,6 +522,8 @@ impl Viewer {
             jobs_queued: Cell::new(false),
             opened_at: Cell::new(None),
             shown: Cell::new(false),
+            monitor: RefCell::new(None),
+            reload_pending: Cell::new(false),
         });
         v.install_actions();
         v.connect_signals();
@@ -652,6 +658,7 @@ impl Viewer {
         self.window.connect_close_request(move |_| {
             if let Some(v) = weak.upgrade() {
                 v.renderer.replace(None);
+                v.monitor.replace(None);
                 VIEWERS.with(|list| list.borrow_mut().retain(|w| !Rc::ptr_eq(w, &v)));
                 if debug() {
                     eprintln!(
@@ -844,8 +851,21 @@ impl Viewer {
         self.renderer.replace(Some(Renderer::start(
             doc.path.clone(),
             doc.password.clone(),
+            doc.stamp,
             tx,
         )));
+        let monitor = gio::File::for_path(&doc.path)
+            .monitor_file(gio::FileMonitorFlags::NONE, gio::Cancellable::NONE)
+            .ok();
+        if let Some(m) = &monitor {
+            let weak = Rc::downgrade(self);
+            m.connect_changed(move |_, _, _, _| {
+                if let Some(v) = weak.upgrade() {
+                    v.schedule_reload();
+                }
+            });
+        }
+        self.monitor.replace(monitor);
         let weak = Rc::downgrade(self);
         glib::spawn_future_local(async move {
             while let Some(msg) = rx.next().await {
@@ -919,6 +939,7 @@ impl Viewer {
                     }
                 }
             }
+            Message::Changed => self.schedule_reload(),
             Message::Failed(job) => {
                 if debug() {
                     eprintln!(
@@ -975,6 +996,64 @@ impl Viewer {
                     );
                 }
                 self.update_find_status();
+            }
+        }
+    }
+
+    /// Die Datei hat sich geändert (Überwachung oder Renderfaden): neu laden,
+    /// sobald ihr Stempel eine halbe Sekunde gleich bleibt (WeasyPrint und
+    /// Co. schreiben in Etappen).
+    fn schedule_reload(self: &Rc<Self>) {
+        if self.reload_pending.replace(true) {
+            return;
+        }
+        let weak = Rc::downgrade(self);
+        let last: Cell<Option<Option<Stamp>>> = Cell::new(None);
+        glib::timeout_add_local(Duration::from_millis(500), move || {
+            let Some(v) = weak.upgrade() else {
+                return glib::ControlFlow::Break;
+            };
+            let Some(doc) = v.view.document() else {
+                v.reload_pending.set(false);
+                return glib::ControlFlow::Break;
+            };
+            let now = document::stamp(&doc.path);
+            if last.replace(Some(now)) != Some(now) {
+                return glib::ControlFlow::Continue;
+            }
+            v.reload_pending.set(false);
+            v.reload(&doc, now);
+            glib::ControlFlow::Break
+        });
+    }
+
+    /// Neu laden mit derselben Seite und demselben Zoom. Unverändert: nichts
+    /// tun. Fehlt die Datei oder ist sie nicht lesbar: letzte Anzeige behalten
+    /// und in der Statusleiste darauf hinweisen.
+    fn reload(self: &Rc<Self>, doc: &Doc, now: Option<Stamp>) {
+        if now == doc.stamp {
+            return;
+        }
+        let loaded = now
+            .ok_or(OpenError::Unreadable(String::new()))
+            .and_then(|_| Doc::load(&doc.path, doc.password.as_deref()));
+        match loaded {
+            Ok(new) => {
+                if debug() {
+                    eprintln!("querencia-dokumente: Datei geändert, neu geladen");
+                }
+                let page = self.view.current_page();
+                self.set_doc(new);
+                self.view.go_to_page(page);
+                self.update_status();
+            }
+            Err(e) => {
+                if debug() {
+                    eprintln!("querencia-dokumente: Datei geändert, nicht neu geladen: {e:?}");
+                }
+                self.status_text.set_text(&gettext(
+                    "The file was removed or can no longer be read. Showing the last loaded version.",
+                ));
             }
         }
     }

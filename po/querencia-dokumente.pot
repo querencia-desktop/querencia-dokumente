@@ -33,50 +33,50 @@ msgstr ""
 msgid "PDF;Document;Viewer;Reader;"
 msgstr ""
 
-#: src/dialogs.rs:44
+#: src/dialogs.rs:107
 msgid "_Close"
 msgstr ""
 
-#: src/dialogs.rs:92
+#: src/dialogs.rs:170
 msgid "Error"
 msgstr ""
 
-#: src/dialogs.rs:110
+#: src/dialogs.rs:186
 msgid "Enter password"
 msgstr ""
 
-#: src/dialogs.rs:117
+#: src/dialogs.rs:193
 msgid "Password required"
 msgstr ""
 
-#: src/dialogs.rs:124
-msgid "_Password:"
-msgstr ""
-
-#: src/dialogs.rs:148
-msgid "_Cancel"
-msgstr ""
-
-#: src/dialogs.rs:149
-msgid "_Unlock Document"
-msgstr ""
-
-#: src/dialogs.rs:192
+#: src/dialogs.rs:196
 #, no-c-format
 msgid ""
 "The document “{name}” is locked and requires a password before it can be opened."
 msgstr ""
 
-#: src/dialogs.rs:197
+#: src/dialogs.rs:203
+msgid "_Password:"
+msgstr ""
+
+#: src/dialogs.rs:216
 msgid "Password was incorrect. Please try again."
 msgstr ""
 
-#: src/dialogs.rs:211
+#: src/dialogs.rs:231
+msgid "_Cancel"
+msgstr ""
+
+#: src/dialogs.rs:232
+msgid "_Unlock Document"
+msgstr ""
+
+#: src/dialogs.rs:278
 #, no-c-format
 msgid "About {name}"
 msgstr ""
 
-#: src/dialogs.rs:226
+#: src/dialogs.rs:292
 msgid ""
 "Classic document viewer for Querencia Desktop\n"
 "modelled on Evince 2.30.\n"
@@ -85,7 +85,7 @@ msgid ""
 "Alpha – not released for everyday use."
 msgstr ""
 
-#: src/dialogs.rs:231
+#: src/dialogs.rs:297
 msgid ""
 "License: GNU GPL, version 3 or later\n"
 "PDF rendering: Poppler (GPL)"
@@ -97,121 +97,121 @@ msgctxt "decimal separator"
 msgid "."
 msgstr ""
 
-#: src/i18n.rs:159 src/i18n.rs:160 src/properties.rs:73
+#: src/i18n.rs:159 src/i18n.rs:160 src/properties.rs:71
 #, no-c-format
 msgid "{n} byte"
 msgid_plural "{n} bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/print.rs:90
+#: src/print.rs:118
 #, no-c-format
 msgid "Failed to print document “{name}”."
 msgstr ""
 
-#: src/print.rs:99
+#: src/print.rs:127
 msgid "Failed to print document."
 msgstr ""
 
 #. TRANSLATORS: Papiergröße mit Formatname, z. B. „210 × 297 mm (A4)“
-#: src/properties.rs:47
+#: src/properties.rs:48
 #, no-c-format
 msgid "{width} × {height} mm ({paper})"
 msgstr ""
 
 #. TRANSLATORS: Papiergröße eines quer liegenden Normformats
-#: src/properties.rs:52
+#: src/properties.rs:53
 #, no-c-format
 msgid "{width} × {height} mm ({paper}, landscape)"
 msgstr ""
 
-#: src/properties.rs:57
+#: src/properties.rs:58
 #, no-c-format
 msgid "{width} × {height} mm"
 msgstr ""
 
 #. TRANSLATORS: Datum und Uhrzeit, Format von g_date_time_format (%d Tag, %m Monat, %Y Jahr, %H:%M Uhrzeit)
-#: src/properties.rs:88
+#: src/properties.rs:86
 msgid "%Y-%m-%d %H:%M"
 msgstr ""
 
-#: src/properties.rs:95
+#: src/properties.rs:93
 msgid "None"
 msgstr ""
 
-#: src/properties.rs:96
+#: src/properties.rs:94
 msgid "Title"
 msgstr ""
 
-#: src/properties.rs:99
+#: src/properties.rs:97
 msgid "Location"
 msgstr ""
 
-#: src/properties.rs:101
+#: src/properties.rs:99
 msgid "File"
 msgstr ""
 
-#: src/properties.rs:103
+#: src/properties.rs:101
 msgid "Subject"
 msgstr ""
 
-#: src/properties.rs:104
+#: src/properties.rs:102
 msgid "Author"
 msgstr ""
 
-#: src/properties.rs:105
+#: src/properties.rs:103
 msgid "Keywords"
 msgstr ""
 
-#: src/properties.rs:106
+#: src/properties.rs:104
 msgid "Creator"
 msgstr ""
 
-#: src/properties.rs:107
+#: src/properties.rs:105
 msgid "Producer"
 msgstr ""
 
-#: src/properties.rs:114
+#: src/properties.rs:112
 msgid "Created"
 msgstr ""
 
-#: src/properties.rs:117
+#: src/properties.rs:115
 msgid "Modified"
 msgstr ""
 
-#: src/properties.rs:119
+#: src/properties.rs:117
 msgid "Number of Pages"
 msgstr ""
 
-#: src/properties.rs:121
+#: src/properties.rs:119
 msgid "Format"
 msgstr ""
 
-#: src/properties.rs:124
+#: src/properties.rs:122
 msgid "Security"
 msgstr ""
 
 #. TRANSLATORS: Eigenschaften, Zeile „Sicherheit“ bei Kennwortschutz
-#: src/properties.rs:127
+#: src/properties.rs:125
 msgctxt "security"
 msgid "Password protected"
 msgstr ""
 
-#: src/properties.rs:133
+#: src/properties.rs:131
 msgid "Paper Size"
 msgstr ""
 
-#: src/properties.rs:142
+#: src/properties.rs:139
 msgid "File Size"
 msgstr ""
 
 #. TRANSLATORS: Bezeichnung einer Zeile in den Eigenschaften, fett
-#: src/properties.rs:159
+#: src/properties.rs:157
 #, no-c-format
 msgid "{label}:"
 msgstr ""
 
-#: src/properties.rs:172
+#: src/properties.rs:174
 msgid "Properties"
 msgstr ""
 
@@ -263,168 +263,168 @@ msgstr ""
 msgid "_Copy"
 msgstr ""
 
-#: src/viewer.rs:156
+#: src/viewer.rs:157
 msgid "Select _All"
 msgstr ""
 
-#: src/viewer.rs:159
+#: src/viewer.rs:163
 msgid "_Find…"
 msgstr ""
 
-#: src/viewer.rs:160 src/viewer.rs:429
+#: src/viewer.rs:164 src/viewer.rs:444
 msgid "Find Ne_xt"
 msgstr ""
 
-#: src/viewer.rs:161
+#: src/viewer.rs:165
 msgid "Find Pre_vious"
 msgstr ""
 
-#: src/viewer.rs:166
+#: src/viewer.rs:170
 msgid "_View"
 msgstr ""
 
-#: src/viewer.rs:169
+#: src/viewer.rs:173
 msgid "_Toolbar"
 msgstr ""
 
-#: src/viewer.rs:170
+#: src/viewer.rs:174
 msgid "_Statusbar"
 msgstr ""
 
-#: src/viewer.rs:171
+#: src/viewer.rs:175
 msgid "Side _Pane"
 msgstr ""
 
-#: src/viewer.rs:174
+#: src/viewer.rs:178
 msgid "_Zoom In"
 msgstr ""
 
-#: src/viewer.rs:175
+#: src/viewer.rs:179
 msgid "Zoom _Out"
 msgstr ""
 
-#: src/viewer.rs:176
+#: src/viewer.rs:180
 msgid "_Normal Size"
 msgstr ""
 
-#: src/viewer.rs:177
+#: src/viewer.rs:181
 msgid "_Best Fit"
 msgstr ""
 
-#: src/viewer.rs:178
+#: src/viewer.rs:182
 msgid "Fit Page _Width"
 msgstr ""
 
-#: src/viewer.rs:180
+#: src/viewer.rs:184
 msgid "_Fullscreen"
 msgstr ""
 
-#: src/viewer.rs:184
+#: src/viewer.rs:188
 msgid "_Go"
 msgstr ""
 
-#: src/viewer.rs:187
+#: src/viewer.rs:191
 msgid "_Previous Page"
 msgstr ""
 
-#: src/viewer.rs:188
+#: src/viewer.rs:192
 msgid "_Next Page"
 msgstr ""
 
-#: src/viewer.rs:191
+#: src/viewer.rs:195
 msgid "_First Page"
 msgstr ""
 
-#: src/viewer.rs:192
+#: src/viewer.rs:196
 msgid "_Last Page"
 msgstr ""
 
-#: src/viewer.rs:194
+#: src/viewer.rs:198
 msgid "_Go to Page…"
 msgstr ""
 
-#: src/viewer.rs:198
+#: src/viewer.rs:202
 msgid "_Help"
 msgstr ""
 
-#: src/viewer.rs:199
+#: src/viewer.rs:203
 msgid "_About"
 msgstr ""
 
-#: src/viewer.rs:214 src/viewer.rs:1040
+#: src/viewer.rs:218 src/viewer.rs:1163
 msgid "Best Fit"
 msgstr ""
 
-#: src/viewer.rs:215 src/viewer.rs:1041
+#: src/viewer.rs:219 src/viewer.rs:1164
 msgid "Fit Page Width"
 msgstr ""
 
-#: src/viewer.rs:333
+#: src/viewer.rs:344
 msgid "Open a document"
 msgstr ""
 
-#: src/viewer.rs:338
+#: src/viewer.rs:349
 msgid "Print this document"
 msgstr ""
 
-#: src/viewer.rs:344
+#: src/viewer.rs:355
 msgid "Go to the previous page"
 msgstr ""
 
-#: src/viewer.rs:349
+#: src/viewer.rs:360
 msgid "Go to the next page"
 msgstr ""
 
-#: src/viewer.rs:357
+#: src/viewer.rs:368
 msgid "Select page"
 msgstr ""
 
-#: src/viewer.rs:367
+#: src/viewer.rs:378
 msgid "Shrink the document"
 msgstr ""
 
-#: src/viewer.rs:372
+#: src/viewer.rs:383
 msgid "Enlarge the document"
 msgstr ""
 
-#: src/viewer.rs:377
+#: src/viewer.rs:388
 msgid "Adjust the zoom level"
 msgstr ""
 
-#: src/viewer.rs:385
+#: src/viewer.rs:396
 msgid "Find a word or phrase in the document"
 msgstr ""
 
 #. TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
-#: src/viewer.rs:407
+#: src/viewer.rs:420
 msgid ""
 "No document loaded.\n"
 "\n"
 "File → Open… (Ctrl+O)"
 msgstr ""
 
-#: src/viewer.rs:420
+#: src/viewer.rs:435
 msgid "Close the find bar"
 msgstr ""
 
-#: src/viewer.rs:422
+#: src/viewer.rs:437
 msgid "Fi_nd:"
 msgstr ""
 
-#: src/viewer.rs:426
+#: src/viewer.rs:441
 msgid "Find _Previous"
 msgstr ""
 
-#: src/viewer.rs:432
+#: src/viewer.rs:447
 msgid "C_ase Sensitive"
 msgstr ""
 
-#: src/viewer.rs:728 src/viewer.rs:756
+#: src/viewer.rs:752 src/viewer.rs:802
 #, no-c-format
 msgid "Unable to open document “{name}”."
 msgstr ""
 
-#: src/viewer.rs:730
+#: src/viewer.rs:754
 #, no-c-format
 msgid ""
 "The file could not be read.\n"
@@ -432,11 +432,11 @@ msgid ""
 "Details: {detail}"
 msgstr ""
 
-#: src/viewer.rs:735
+#: src/viewer.rs:759
 msgid "The file is damaged or is not a PDF document."
 msgstr ""
 
-#: src/viewer.rs:737
+#: src/viewer.rs:761
 #, no-c-format
 msgid ""
 "The file is damaged or is not a PDF document.\n"
@@ -444,55 +444,60 @@ msgid ""
 "Details: {detail}"
 msgstr ""
 
-#: src/viewer.rs:742
+#: src/viewer.rs:766
 msgid "The document is password protected."
 msgstr ""
 
-#: src/viewer.rs:760
+#: src/viewer.rs:806
 msgid "Only local files are supported."
 msgstr ""
 
-#: src/viewer.rs:1028
+#: src/viewer.rs:1054
+msgid ""
+"The file was removed or can no longer be read. Showing the last loaded version."
+msgstr ""
+
+#: src/viewer.rs:1151
 #, no-c-format
 msgid "of {count}"
 msgstr ""
 
 #. TRANSLATORS: Statusleiste, aktuelle Seite
-#: src/viewer.rs:1029
+#: src/viewer.rs:1152
 #, no-c-format
 msgid "Page {index} of {count}"
 msgstr ""
 
-#: src/viewer.rs:1160
+#: src/viewer.rs:1283
 msgid "Searching…"
 msgstr ""
 
-#: src/viewer.rs:1161
+#: src/viewer.rs:1284
 msgid "Not found"
 msgstr ""
 
 #. TRANSLATORS: Suchleiste, aktueller Treffer
-#: src/viewer.rs:1162
+#: src/viewer.rs:1285
 #, no-c-format
 msgid "Match {index} of {count}"
 msgstr ""
 
-#: src/viewer.rs:1168
+#: src/viewer.rs:1290
 #, no-c-format
 msgid "{n} match"
 msgid_plural "{n} matches"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/viewer.rs:1384
+#: src/viewer.rs:1499
 msgid "PDF Documents"
 msgstr ""
 
-#: src/viewer.rs:1388
+#: src/viewer.rs:1503
 msgid "All Files"
 msgstr ""
 
-#: src/viewer.rs:1394
+#: src/viewer.rs:1509
 msgid "Open Document"
 msgstr ""
 

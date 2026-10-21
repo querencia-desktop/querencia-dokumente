@@ -7,6 +7,11 @@
 //! Änderung der Ansicht vollständig (sichtbare Seiten zuerst, dann Nachbarn,
 //! dann Miniaturen). Nicht mehr gebrauchte Aufträge entfallen so von selbst;
 //! große Dokumente blockieren nie die Oberfläche.
+//!
+//! Vor und nach jedem Bild vergleicht der Renderfaden den Dateistempel mit
+//! dem beim Öffnen (document::Stamp). Hat sich die Datei geändert, schickt er
+//! kein Bild mehr, sondern einmal [`Message::Changed`] und endet; das Fenster
+//! lädt das Dokument neu (0.1.3: sonst weiße Seiten aus alten Offsets).
 
 use std::collections::VecDeque;
 use std::path::PathBuf;
@@ -16,7 +21,7 @@ use std::sync::{Arc, Condvar, Mutex};
 use futures_channel::mpsc::UnboundedSender;
 use gtk::glib;
 
-use crate::document;
+use crate::document::{self, Stamp};
 use crate::layout::Rect;
 use crate::search::from_pdf_rect;
 
@@ -48,6 +53,8 @@ pub struct Image {
 pub enum Message {
     Rendered(Image),
     Failed(Job),
+    /// Die Datei hat sich seit dem Öffnen geändert; der Renderfaden ist beendet.
+    Changed,
     /// Suchergebnis einer Seite (auch leer: Fortschritt).
     Found {
         generation: u64,
@@ -104,14 +111,20 @@ pub struct Renderer {
 }
 
 impl Renderer {
-    pub fn start(path: PathBuf, password: Option<String>, tx: UnboundedSender<Message>) -> Self {
+    /// `stamp`: Dateistempel beim Öffnen im Hauptfaden (`Doc::stamp`).
+    pub fn start(
+        path: PathBuf,
+        password: Option<String>,
+        stamp: Option<Stamp>,
+        tx: UnboundedSender<Message>,
+    ) -> Self {
         let shared = Arc::new(Shared::default());
         {
             let (shared, path, password, tx) =
                 (shared.clone(), path.clone(), password.clone(), tx.clone());
             std::thread::Builder::new()
                 .name("qd-render".into())
-                .spawn(move || render_loop(&shared, &path, password.as_deref(), &tx))
+                .spawn(move || render_loop(&shared, &path, password.as_deref(), stamp, &tx))
                 .expect("Renderfaden");
         }
         {
@@ -170,11 +183,15 @@ fn render_loop(
     shared: &Shared,
     path: &std::path::Path,
     password: Option<&str>,
+    stamp: Option<Stamp>,
     tx: &UnboundedSender<Message>,
 ) {
     let Ok(doc) = document::open(path, password) else {
         return;
     };
+    // Geändert heißt: Stempel da und anders. Fehlt die Datei (gelöscht),
+    // liest Poppler weiter aus der offenen Datei – das bleibt richtig.
+    let changed = || stamp.is_some() && document::stamp(path).is_some_and(|s| Some(s) != stamp);
     loop {
         let job = {
             let mut q = shared.queue.lock().unwrap();
@@ -190,9 +207,19 @@ fn render_loop(
                 q = shared.wake.wait(q).unwrap();
             }
         };
-        let msg = match render_page(&doc, job) {
-            Some(image) => Message::Rendered(image),
-            None => Message::Failed(job),
+        let msg = if changed() {
+            None
+        } else {
+            let result = render_page(&doc, job);
+            (!changed()).then_some(result)
+        };
+        let msg = match msg {
+            Some(Some(image)) => Message::Rendered(image),
+            Some(None) => Message::Failed(job),
+            None => {
+                tx.unbounded_send(Message::Changed).ok();
+                return;
+            }
         };
         if tx.unbounded_send(msg).is_err() {
             return; // Fenster geschlossen
@@ -327,7 +354,8 @@ mod tests {
     fn pages_render_in_the_background() {
         let dir = temp("render");
         let (tx, mut rx) = futures_channel::mpsc::unbounded();
-        let r = Renderer::start(sample_pdf(&dir), None, tx);
+        let path = sample_pdf(&dir);
+        let r = Renderer::start(path.clone(), None, document::stamp(&path), tx);
         let job = Job {
             page: 1,
             key: 1000,
@@ -354,7 +382,8 @@ mod tests {
     fn search_reports_every_page_and_finishes() {
         let dir = temp("suche");
         let (tx, mut rx) = futures_channel::mpsc::unbounded();
-        let r = Renderer::start(sample_pdf(&dir), None, tx);
+        let path = sample_pdf(&dir);
+        let r = Renderer::start(path.clone(), None, document::stamp(&path), tx);
         let generation = r.search("querencia", false, 1);
         let msgs = collect(&mut rx, |m| matches!(m, Message::SearchDone { .. }));
         let mut pages = Vec::new();
@@ -387,6 +416,148 @@ mod tests {
             } => *g != generation || rects.is_empty(),
             _ => true,
         }));
+        drop(r);
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    /// Anteil nicht-weißer Pixel eines Bildes.
+    fn ink(img: &Image) -> f64 {
+        let w = img.width as usize;
+        let dark: usize = img
+            .data
+            .chunks(img.stride)
+            .map(|row| {
+                row[..w * 4]
+                    .chunks(4)
+                    .filter(|p| p[..3].iter().any(|&c| c < 250))
+                    .count()
+            })
+            .sum();
+        dark as f64 / (w * img.height as usize) as f64
+    }
+
+    fn testdaten(name: &str) -> PathBuf {
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("testdaten")
+            .join(name)
+    }
+
+    /// Hauptansicht bei 100 % (96 dpi): Pixel je Punkt in Tausendsteln.
+    const KEY_100: u32 = 1333;
+
+    fn job(page: usize) -> Job {
+        Job {
+            page,
+            key: KEY_100,
+            thumb: false,
+        }
+    }
+
+    /// Befund 21.10.2026: Test-PDFs wie das Marketingpaket (variable WOFF2
+    /// von WeasyPrint 70, Standardschrift, Bild, 30 Seiten) zeigen jede Seite
+    /// in Hauptansichtsgröße mit Inhalt (werkzeug/leerseiten-pdfs.py).
+    #[test]
+    fn test_pdfs_render_with_content_at_view_size() {
+        for name in [
+            "leer-woff2.pdf",
+            "leer-standard.pdf",
+            "leer-bild.pdf",
+            "leer-30.pdf",
+        ] {
+            let doc = document::open(&testdaten(name), None).unwrap();
+            for page in 0..usize::try_from(doc.n_pages()).unwrap() {
+                let img = render_page(&doc, job(page)).unwrap();
+                assert!(ink(&img) > 0.01, "{name} Seite {}: leer", page + 1);
+            }
+        }
+    }
+
+    /// Kopie von leer-30.pdf in einem eigenen Ordner, mit Renderfaden.
+    fn rewrite_setup(name: &str) -> (PathBuf, PathBuf, Renderer, UnboundedReceiver<Message>) {
+        let dir = temp(name);
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("dokument.pdf");
+        std::fs::copy(testdaten("leer-30.pdf"), &path).unwrap();
+        let (tx, rx) = futures_channel::mpsc::unbounded();
+        let r = Renderer::start(path.clone(), None, document::stamp(&path), tx);
+        (dir, path, r, rx)
+    }
+
+    type UnboundedReceiver<T> = futures_channel::mpsc::UnboundedReceiver<T>;
+
+    fn rendered(rx: &mut UnboundedReceiver<Message>, page: usize) -> Vec<Message> {
+        collect(rx, |m| {
+            matches!(m, Message::Changed) || matches!(m, Message::Rendered(i) if i.job.page == page)
+        })
+    }
+
+    #[test]
+    fn a_file_rewritten_in_place_is_reported_not_rendered_blank() {
+        let (dir, path, r, mut rx) = rewrite_setup("umschreiben");
+        r.set_jobs(vec![job(0)]);
+        assert!(matches!(
+            rendered(&mut rx, 0).last(),
+            Some(Message::Rendered(_))
+        ));
+        // wie WeasyPrint: kürzen und neu schreiben, derselbe Inode
+        std::fs::write(&path, std::fs::read(testdaten("leer-30-neu.pdf")).unwrap()).unwrap();
+        r.set_jobs(vec![job(4)]);
+        let msgs = rendered(&mut rx, 4);
+        assert!(matches!(msgs.last(), Some(Message::Changed)));
+        assert!(!msgs.iter().any(|m| matches!(m, Message::Rendered(_))));
+        drop(r);
+        // Neu geladen (wie viewer.rs): alle 30 Seiten mit Inhalt
+        let (tx, mut rx) = futures_channel::mpsc::unbounded();
+        let r = Renderer::start(path.clone(), None, document::stamp(&path), tx);
+        r.set_jobs((0..30).map(job).collect());
+        let msgs = rendered(&mut rx, 29);
+        let images: Vec<&Image> = msgs
+            .iter()
+            .filter_map(|m| match m {
+                Message::Rendered(i) => Some(i),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(images.len(), 30);
+        for img in images {
+            assert!(ink(img) > 0.01, "Seite {} leer", img.job.page + 1);
+        }
+        drop(r);
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn an_unchanged_file_never_asks_for_a_reload() {
+        let (dir, path, r, mut rx) = rewrite_setup("unveraendert");
+        // gelesen, berührt ohne Änderung des Inhalts und der Zeit: kein Neuladen
+        std::fs::read(&path).unwrap();
+        std::fs::set_permissions(&path, std::fs::metadata(&path).unwrap().permissions()).unwrap();
+        r.set_jobs((0..30).map(job).collect());
+        let msgs = rendered(&mut rx, 29);
+        assert!(!msgs.iter().any(|m| matches!(m, Message::Changed)));
+        assert_eq!(
+            msgs.iter()
+                .filter(|m| matches!(m, Message::Rendered(_)))
+                .count(),
+            30
+        );
+        drop(r);
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_deleted_file_keeps_its_last_content() {
+        let (dir, path, r, mut rx) = rewrite_setup("geloescht");
+        r.set_jobs(vec![job(0)]);
+        rendered(&mut rx, 0);
+        // gelöscht: Poppler liest weiter aus der offenen Datei
+        std::fs::remove_file(&path).unwrap();
+        r.set_jobs(vec![job(4)]);
+        let msgs = rendered(&mut rx, 4);
+        match msgs.last() {
+            Some(Message::Rendered(img)) => assert!(ink(img) > 0.01, "Seite 5 leer"),
+            _ => panic!("kein Bild nach dem Löschen"),
+        }
         drop(r);
         std::fs::remove_dir_all(&dir).unwrap();
     }

@@ -46,9 +46,36 @@ pub fn open(path: &Path, password: Option<&str>) -> Result<poppler::Document, Op
     })
 }
 
+/// Dateistempel (Gerät, Inode, Größe, Änderungszeit): ändert sich, sobald
+/// die Datei neu geschrieben oder ersetzt wird. Poppler liest lazy aus der
+/// offenen Datei; wird sie am selben Inode überschrieben (WeasyPrint kürzt
+/// und schreibt neu), liest es die neuen Bytes mit den alten Objekt-Offsets
+/// und zeichnet weiße Seiten (Befund 21.10.2026, 0.1.3).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Stamp {
+    dev: u64,
+    ino: u64,
+    len: u64,
+    mtime: (i64, i64),
+}
+
+/// Stempel von `path`; `None`, wenn die Datei fehlt.
+pub fn stamp(path: &Path) -> Option<Stamp> {
+    use std::os::unix::fs::MetadataExt;
+    let m = std::fs::metadata(path).ok()?;
+    Some(Stamp {
+        dev: m.dev(),
+        ino: m.ino(),
+        len: m.len(),
+        mtime: (m.mtime(), m.mtime_nsec()),
+    })
+}
+
 pub struct Doc {
     pub path: PathBuf,
     pub password: Option<String>,
+    /// Stempel vor dem Öffnen (render.rs prüft ihn vor jedem Bild).
+    pub stamp: Option<Stamp>,
     pub poppler: poppler::Document,
     /// Seitengrößen in Punkt.
     pub sizes: Vec<(f64, f64)>,
@@ -56,6 +83,7 @@ pub struct Doc {
 
 impl Doc {
     pub fn load(path: &Path, password: Option<&str>) -> Result<Self, OpenError> {
+        let stamp = stamp(path);
         let poppler = open(path, password)?;
         let n = poppler.n_pages().max(0);
         let sizes: Vec<(f64, f64)> = (0..n)
@@ -74,6 +102,7 @@ impl Doc {
         Ok(Self {
             path: path.to_path_buf(),
             password: password.map(str::to_string),
+            stamp,
             poppler,
             sizes,
         })
@@ -272,6 +301,24 @@ pub mod tests {
             rects.iter().any(|r| r.y < 100.0 && r.y + r.h > 85.0),
             "{rects:?}"
         );
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn the_stamp_changes_only_when_the_file_does() {
+        let dir = temp("stempel");
+        let path = sample_pdf(&dir);
+        let doc = Doc::load(&path, None).unwrap();
+        // unverändert: derselbe Stempel, auch nach erneutem Lesen
+        assert!(doc.stamp.is_some());
+        std::fs::read(&path).unwrap();
+        assert_eq!(stamp(&path), doc.stamp);
+        // am selben Inode überschrieben (wie WeasyPrint): anderer Stempel
+        std::fs::write(&path, b"%PDF-1.4\nneue Fassung").unwrap();
+        assert_ne!(stamp(&path), doc.stamp);
+        // gelöscht: kein Stempel
+        std::fs::remove_file(&path).unwrap();
+        assert_eq!(stamp(&path), None);
         std::fs::remove_dir_all(&dir).unwrap();
     }
 
