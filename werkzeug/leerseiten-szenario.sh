@@ -5,7 +5,7 @@
 # Umgebung aus $QD_PROFILE/env.sh; dazu QD_PDF (das zu prüfende PDF, nur
 # gelesen), QD_GSK (GSK_RENDERER, leer = GTK-Standard wie live),
 # QD_TEILE (Auswahl aus: sprung100 bildab mausrad z50 z150 ganz leiste),
-# QD_MAX=0 (nicht maximieren), QD_PDF_NEU (zweite Fassung: dann wird eine
+# QD_MAX=0 (nicht maximieren), QD_DUNKEL=1 (dunkle Fassung des Themas), QD_PDF_NEU (zweite Fassung: dann wird eine
 # Kopie von QD_PDF im Profil geöffnet; Teil „umschreiben“ überschreibt sie
 # am selben Inode mit QD_PDF_NEU, Teil „loeschen“ löscht sie).
 # GSK_DEBUG=full-redraw wie in der Sitzung (labwc-environment, QD-070).
@@ -30,6 +30,11 @@ if [ -n "${QD_PDF_NEU:-}" ]; then
     cp "$QD_PDF" "$KOPIE"; QD_PDF=$KOPIE
 fi
 N=$(python3 -I "$W/pdfseiten.py" "$QD_PDF")
+# QD_DUNKEL=1: dunkle Fassung des Themas über gtk-interface-color-scheme im
+# settings.ini des Profils (statt Portal; Dokumente meldet es beim Start)
+if [ "${QD_DUNKEL:-}" = 1 ]; then
+    echo "gtk-interface-color-scheme=dark" >>"$QD_PROFILE/config/gtk-4.0/settings.ini"
+fi
 TEILE=${QD_TEILE:-sprung100 bildab mausrad z50 z150 ganz leiste}
 echo "LANG=$LANG LANGUAGE=$LANGUAGE BIN=$BIN GSK_RENDERER=${GSK_RENDERER:-} PDF=$QD_PDF ($N Seiten) TEILE=$TEILE" >>"$L/szenario.log"
 "$BIN" "$QD_PDF" >"$L/app.log" 2>&1 &
@@ -110,3 +115,5 @@ if kill -0 "$PID" 2>/dev/null; then
 else
     wait "$PID"; echo "ENDE rc=$? Bilder=$n" >"$L/status.txt"
 fi
+# Ende melden: isoliert.py wartet sonst bis zum Zeitlimit
+touch "$L/FERTIG"

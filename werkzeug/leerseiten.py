@@ -64,16 +64,35 @@ def einzaehlen(m):
 def auswerten(pfad):
     pb = GdkPixbuf.Pixbuf.new_from_file(pfad)
     w = pb.get_width()
-    grau_x = 0
-    grau_y = []
+    grau = []
     daten = []
     for y, w, k in zeilen(pb):
         g = maske(k, GRAUT, True)
-        if einzaehlen(g) >= 5:
-            grau_y.append(y)
-            grau_x |= g
+        grau.append(g if einzaehlen(g) >= 5 else 0)
         daten.append(k)
-    if not grau_y:
+    # Ansicht = längste Folge von Zeilen mit Grau (Lücken bis 8 Zeilen);
+    # einzelne graue Kantenpixel in Menü oder Leiste (dunkles Thema) zählen
+    # so nicht.
+    beste, start, letzte = (0, -1, -1), None, None
+    for y, g in enumerate(grau):
+        if not g:
+            continue
+        if letzte is None or y - letzte > 9:
+            start = y
+        letzte = y
+        if letzte - start > beste[0]:
+            beste = (letzte - start, start, letzte)
+    if beste[1] < 0:
+        return None, []
+    # Spalten der Ansicht: in mindestens 30 % der Zeilen grau (jede vierte
+    # Zeile gezählt); vereinzelte Treffer in der Seitenleiste fallen weg.
+    zaehler = [0] * w
+    proben = range(beste[1], beste[2] + 1, 4)
+    for y in proben:
+        for i, b in enumerate(grau[y].to_bytes(w, "big")):
+            zaehler[i] += b
+    grau_x = int.from_bytes(bytes(1 if z >= 0.3 * len(proben) else 0 for z in zaehler), "big")
+    if not grau_x:
         return None, []
     x0, x1 = stellen(grau_x, w)
     breite_bits = x1 - x0 + 1
@@ -81,7 +100,7 @@ def auswerten(pfad):
     # Unten endet die Ansicht an der ersten Zeile ohne Grau und ohne Weiß
     # (eine Seite kann breiter als die Ansicht sein: dann fehlt das Grau).
     # Rahmenzeilen (dunkel) zählen mit; Schluss nach 8 Zeilen ohne beides.
-    y0 = y1 = grau_y[0]
+    y0 = y1 = beste[1]
     for y in range(y0, len(daten)):
         k = daten[y]
         if maske(k, GRAUT, True) & fenster or maske(k, (WEISS,) * 3, True) & fenster:
