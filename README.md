@@ -2,8 +2,10 @@
 
 Klassischer PDF-Betrachter für alle, die Dokumente lesen, durchsuchen und
 drucken wollen. Teil von
-[Querencia Desktop](https://github.com/querencia-desktop/querencia) – einer
+[Querencia Desktop](https://querencialinux.org) – einer
 klassischen Desktopumgebung im GNOME-2-Stil für Wayland (labwc, Rust, GTK 4).
+Installiert wird es zusammen mit Querencia Desktop aus der APT-Quelle;
+Anleitung auf <https://querencialinux.org>.
 
 *English summary:* A classic PDF document viewer modelled on Evince 2.30.
 Part of Querencia Desktop, a classic GNOME-2-style desktop for Wayland.
@@ -30,7 +32,7 @@ Alpha software; documentation is in German.
   Comics) – Querencia Dokumente **schreibt nie** in Dokumente.
 
 Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
-`querencia-dokumente` · Debian-Paket: `querencia-dokumente` (geplant, G2-F)
+`querencia-dokumente` · Debian-Paket: `querencia-dokumente`
 
 | Taste | Wirkung |
 |---|---|
@@ -48,9 +50,8 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 
 | | |
 |---|---|
-| Version | 0.1.4 (Tag `dokumente/0.1.4`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und Fehler melden); davor 0.1.3 (keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird) |
-| Auf der Entwicklungs-VM | live seit 20.10.2026 (zuletzt 0.1.3 seit 21.10.2026), Standard für PDF; 0.1.4 wartet auf Freigabe |
-| Letzte Prüfung | 22.10.2026 (0.1.4): 53 Unit-Tests, Clippy sauber, `i18n.py pruefen` PASS; isoliert de/en 1024×768 mit Browser-Attrappe: Online-Hilfe öffnet /de/docs/ bzw. /en/docs/, Fehler melden die GitHub-Seite (je über die Zugriffstaste), Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz. 21.10.2026 (0.1.3): 52 Unit-Tests; Leerseiten-Probe mit dem Befund-PDF und mit Überschreiben/Löschen im Betrieb, hell und dunkel gegen 0.1.2 (isoliert, Bericht `dokumente-013-bericht.md`). 21.10.2026 (0.1.2): 47 Unit-Tests; hell gegen 0.1.1 und dunkel (beim Start und beim Wechsel) je de/en × 1024×768/1920×1080 (isoliert, Bericht `dokumente-012-bericht.md`). 20.10.2026 (0.1.1): 47 Unit-Tests; Nebenfenster je 3× geöffnet, de/en × 1024×768/1920×1080, gegen 0.1.0 (isoliert). 0.1.0: GUI-Szenario mit 49 Schritten je de/en × 1024×768/1920×1080 (isoliert), Messung mit 500 Seiten, Probe des Integrationsskripts 165/0 |
+| Version | 0.1.4 (Tag `dokumente/0.1.4`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.1.3 keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird; seit 0.1.2 dunkles Thema auch beim Start |
+| Letzte Prüfung | 22.10.2026 (0.1.4): 53 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isoliert de/en 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.1.3): 52 Unit-Tests; Probe mit Überschreiben und Löschen des offenen PDF im Betrieb, hell und dunkel gegen 0.1.2 (isoliert) |
 | Bekannte Lücken | siehe [docs/testing.md](docs/testing.md), Abschnitt „Nicht getestet“ |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Poppler 26.01, Rust 1.93 |
 | Nicht getestet | andere Distributionen, HiDPI, Mehrmonitor, echte Drucker |
@@ -93,12 +94,16 @@ einem zweiten Faden.
 - **Poppler:** Querencia Dokumente linkt dynamisch gegen `libpoppler-glib`
   (Poppler, GPL-2.0 oder GPL-3.0; Ubuntu-Paket `libpoppler-glib8t64`). Das
   gelinkte Programm wird deshalb nach den Bedingungen der GPL verbreitet;
-  GPL-3.0-or-later ist damit verträglich (LIZENZEN.md §4, ENTSCHEIDUNGEN
-  Nr. 1 und 14). Weitere Bibliotheken: GTK 4, GLib, Cairo, Pango (LGPL), die
-  Rust-Bindings gtk-rs und poppler-rs (MIT).
+  GPL-3.0-or-later ist damit verträglich. Weitere Bibliotheken: GTK 4,
+  GLib, Cairo, Pango (LGPL), die Rust-Bindings gtk-rs und poppler-rs (MIT).
 - `werkzeug/virtual-keyboard-unstable-v1.xml` (nur Testwerkzeug) behält den
   MIT-Vermerk im Dateikopf.
 - Übersetzungen (`po/`) stehen unter derselben Lizenz wie das Programm.
 
 Name und Logo „Querencia“ sind keine freien Inhalte.
 
+## Fehler melden
+
+Fehler, Wünsche und Fragen zu Querencia gehen an die gemeinsame Meldestelle:
+<https://github.com/querencia-desktop/querencia/issues/new/choose>.
+Sicherheitslücken bitte nicht öffentlich melden, siehe [SECURITY.md](SECURITY.md).

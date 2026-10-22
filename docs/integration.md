@@ -1,7 +1,7 @@
 # Integration in die laufende Sitzung
 
 Vorlage und Skript liegen unter `integration/` (wird beim Veröffentlichen aus
-der Geschichte gefiltert, ENTSCHEIDUNGEN Nr. 13).
+der Geschichte gefiltert).
 
 | Datei | Zweck |
 |---|---|
@@ -13,7 +13,7 @@ der Geschichte gefiltert, ENTSCHEIDUNGEN Nr. 13).
 ## Was `aktivieren` tut
 
 Alle Pfade folgen aus `$HOME`. Ist `HOME` das echte Heimatverzeichnis, ist
-der Lauf live und braucht `DOK_FREIGABE=ja` (nur Status-Session nach Prüfung).
+der Lauf live und braucht `DOK_FREIGABE=ja` (nur nach Prüfung).
 
 1. Ablage `~/opt/querencia/dokumente/<sha16>/` (Verzeichnisse 0555): Binary
    0555, `share/locale/de/LC_MESSAGES/querencia-dokumente.mo` und
