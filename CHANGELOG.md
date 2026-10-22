@@ -5,6 +5,21 @@ nach [Semantic Versioning](https://semver.org/lang/de/). Solange die Hauptversio
 0 ist, kann sich alles ändern. Jede Zeile nennt, was Nutzer merken; Unfertiges
 steht als „unfertig“ da.
 
+## [0.1.4] – 2026-10-22
+
+### Neu
+- Hilfe-Menü mit „Online-Hilfe“ (querencialinux.org/de/docs/, englische
+  Oberfläche /en/docs/) und „Fehler melden“ (neue Fehlermeldung auf GitHub);
+  beides öffnet der Standardbrowser der Sitzung.
+
+### Geändert
+- Info-Dialog wie in den übrigen Querencia-Programmen: eigene Zeile „Alpha –
+  nicht für den Alltag freigegeben“, Website querencialinux.org,
+  „© 2026 Querencia Desktop contributors“, Lizenz GPL-3.0-or-later, darunter
+  weiter die Poppler-Zeile. Englisch heißt er „About Document Viewer“ (wie
+  im Anwendungsmenü), deutsch weiter „Info zu Querencia Dokumente“.
+- Katalog ohne interne Kennungen.
+
 ## [0.1.3] – 2026-10-21
 
 ### Behoben

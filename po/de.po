@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: querencia-dokumente\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-10-20 14:00+0200\n"
-"Last-Translator: Querencia Desktop <147073098+pottrauschen@users.noreply.github.com>\n"
+"PO-Revision-Date: 2026-10-22 03:57+0200\n"
+"Last-Translator: Querencia Desktop contributors\n"
 "Language-Team: Deutsch (Querencia)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -71,32 +71,45 @@ msgstr "_Abbrechen"
 msgid "_Unlock Document"
 msgstr "Dokument _entsperren"
 
-#: src/dialogs.rs:278
-#, no-c-format
-msgid "About {name}"
-msgstr "Info zu {name}"
+#. TRANSLATORS: Adresse der Online-Hilfe; nur das Sprachkürzel anpassen (deutsch …/de/docs/).
+#: src/dialogs.rs:281
+msgid "https://querencialinux.org/en/docs/"
+msgstr "https://querencialinux.org/de/docs/"
 
-#: src/dialogs.rs:292
+#. TRANSLATORS: Fenstertitel des Info-Dialogs; deutsch mit dem Eigennamen „Querencia Dokumente“, englisch mit dem Namen aus dem Anwendungsmenü.
+#: src/dialogs.rs:304
+msgid "About Document Viewer"
+msgstr "Info zu Querencia Dokumente"
+
+#. TRANSLATORS: Programmname und Version im Info-Dialog; deutsch „Querencia Dokumente {version}“.
+#: src/dialogs.rs:316
+#, no-c-format
+msgid "Document Viewer {version}"
+msgstr "Querencia Dokumente {version}"
+
+#: src/dialogs.rs:324
 msgid ""
 "Classic document viewer for Querencia Desktop\n"
 "modelled on Evince 2.30.\n"
 "\n"
-"Documents are only displayed, never changed.\n"
-"Alpha – not released for everyday use."
+"Documents are only displayed, never changed."
 msgstr ""
 "Klassischer Dokumentenbetrachter für Querencia Desktop\n"
 "nach dem Vorbild von Evince 2.30.\n"
 "\n"
-"Dokumente werden nur angezeigt, nie verändert.\n"
-"Alpha – nicht für den Alltag freigegeben."
+"Dokumente werden nur angezeigt, nie verändert."
 
-#: src/dialogs.rs:297
-msgid ""
-"License: GNU GPL, version 3 or later\n"
-"PDF rendering: Poppler (GPL)"
-msgstr ""
-"Lizenz: GNU GPL, Version 3 oder neuer\n"
-"PDF-Darstellung: Poppler (GPL)"
+#: src/dialogs.rs:329
+msgid "Alpha – not released for everyday use."
+msgstr "Alpha – nicht für den Alltag freigegeben."
+
+#: src/dialogs.rs:342
+msgid "License: GPL-3.0-or-later"
+msgstr "Lizenz: GPL-3.0-or-later"
+
+#: src/dialogs.rs:344
+msgid "PDF rendering: Poppler (GPL)"
+msgstr "PDF-Darstellung: Poppler (GPL)"
 
 #. TRANSLATORS: Dezimalzeichen in Dateigröße und Seitenmaß („2.9 kB“, „215.9 × 279.4 mm“)
 #: src/i18n.rs:79
@@ -278,7 +291,7 @@ msgstr "_Alles auswählen"
 msgid "_Find…"
 msgstr "_Suchen …"
 
-#: src/viewer.rs:164 src/viewer.rs:444
+#: src/viewer.rs:164 src/viewer.rs:452
 msgid "Find Ne_xt"
 msgstr "_Weitersuchen"
 
@@ -354,56 +367,65 @@ msgstr "Gehe _zu Seite …"
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: src/viewer.rs:203
+#. TRANSLATORS: Hilfe-Menü; Online-Hilfe und Fehlermeldung öffnen den Browser. Zugriffstasten im Menü verschieden halten.
+#: src/viewer.rs:207
+msgid "Online _Help"
+msgstr "_Online-Hilfe"
+
+#: src/viewer.rs:208
+msgid "_Report a Bug"
+msgstr "_Fehler melden"
+
+#: src/viewer.rs:210
 msgid "_About"
 msgstr "_Info"
 
-#: src/viewer.rs:218 src/viewer.rs:1163
+#: src/viewer.rs:226 src/viewer.rs:1171
 msgid "Best Fit"
 msgstr "Ganze Seite"
 
-#: src/viewer.rs:219 src/viewer.rs:1164
+#: src/viewer.rs:227 src/viewer.rs:1172
 msgid "Fit Page Width"
 msgstr "Seitenbreite"
 
-#: src/viewer.rs:344
+#: src/viewer.rs:352
 msgid "Open a document"
 msgstr "Ein Dokument öffnen"
 
-#: src/viewer.rs:349
+#: src/viewer.rs:357
 msgid "Print this document"
 msgstr "Dieses Dokument drucken"
 
-#: src/viewer.rs:355
+#: src/viewer.rs:363
 msgid "Go to the previous page"
 msgstr "Zur vorherigen Seite gehen"
 
-#: src/viewer.rs:360
+#: src/viewer.rs:368
 msgid "Go to the next page"
 msgstr "Zur nächsten Seite gehen"
 
-#: src/viewer.rs:368
+#: src/viewer.rs:376
 msgid "Select page"
 msgstr "Seite wählen"
 
-#: src/viewer.rs:378
+#: src/viewer.rs:386
 msgid "Shrink the document"
 msgstr "Das Dokument verkleinern"
 
-#: src/viewer.rs:383
+#: src/viewer.rs:391
 msgid "Enlarge the document"
 msgstr "Das Dokument vergrößern"
 
-#: src/viewer.rs:388
+#: src/viewer.rs:396
 msgid "Adjust the zoom level"
 msgstr "Die Vergrößerungsstufe anpassen"
 
-#: src/viewer.rs:396
+#: src/viewer.rs:404
 msgid "Find a word or phrase in the document"
 msgstr "Ein Wort oder einen Ausdruck im Dokument suchen"
 
 #. TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
-#: src/viewer.rs:420
+#: src/viewer.rs:428
 msgid ""
 "No document loaded.\n"
 "\n"
@@ -413,28 +435,28 @@ msgstr ""
 "\n"
 "Datei → Öffnen … (Strg+O)"
 
-#: src/viewer.rs:435
+#: src/viewer.rs:443
 msgid "Close the find bar"
 msgstr "Suchleiste schließen"
 
-#: src/viewer.rs:437
+#: src/viewer.rs:445
 msgid "Fi_nd:"
 msgstr "_Suchen:"
 
-#: src/viewer.rs:441
+#: src/viewer.rs:449
 msgid "Find _Previous"
 msgstr "_Rückwärts suchen"
 
-#: src/viewer.rs:447
+#: src/viewer.rs:455
 msgid "C_ase Sensitive"
 msgstr "_Groß-/Kleinschreibung beachten"
 
-#: src/viewer.rs:752 src/viewer.rs:802
+#: src/viewer.rs:760 src/viewer.rs:810
 #, no-c-format
 msgid "Unable to open document “{name}”."
 msgstr "Das Dokument „{name}“ konnte nicht geöffnet werden."
 
-#: src/viewer.rs:754
+#: src/viewer.rs:762
 #, no-c-format
 msgid ""
 "The file could not be read.\n"
@@ -445,11 +467,11 @@ msgstr ""
 "\n"
 "Einzelheiten: {detail}"
 
-#: src/viewer.rs:759
+#: src/viewer.rs:767
 msgid "The file is damaged or is not a PDF document."
 msgstr "Die Datei ist beschädigt oder kein PDF-Dokument."
 
-#: src/viewer.rs:761
+#: src/viewer.rs:769
 #, no-c-format
 msgid ""
 "The file is damaged or is not a PDF document.\n"
@@ -460,61 +482,61 @@ msgstr ""
 "\n"
 "Einzelheiten: {detail}"
 
-#: src/viewer.rs:766
+#: src/viewer.rs:774
 msgid "The document is password protected."
 msgstr "Das Dokument ist passwortgeschützt."
 
-#: src/viewer.rs:806
+#: src/viewer.rs:814
 msgid "Only local files are supported."
 msgstr "Nur lokale Dateien werden unterstützt."
 
-#: src/viewer.rs:1054
+#: src/viewer.rs:1062
 msgid ""
 "The file was removed or can no longer be read. Showing the last loaded version."
 msgstr ""
 "Die Datei wurde entfernt oder ist nicht mehr lesbar. Angezeigt wird der zuletzt geladene Stand."
 
-#: src/viewer.rs:1151
+#: src/viewer.rs:1159
 #, no-c-format
 msgid "of {count}"
 msgstr "von {count}"
 
 #. TRANSLATORS: Statusleiste, aktuelle Seite
-#: src/viewer.rs:1152
+#: src/viewer.rs:1160
 #, no-c-format
 msgid "Page {index} of {count}"
 msgstr "Seite {index} von {count}"
 
-#: src/viewer.rs:1283
+#: src/viewer.rs:1291
 msgid "Searching…"
 msgstr "Suche läuft …"
 
-#: src/viewer.rs:1284
+#: src/viewer.rs:1292
 msgid "Not found"
 msgstr "Nicht gefunden"
 
 #. TRANSLATORS: Suchleiste, aktueller Treffer
-#: src/viewer.rs:1285
+#: src/viewer.rs:1293
 #, no-c-format
 msgid "Match {index} of {count}"
 msgstr "Treffer {index} von {count}"
 
-#: src/viewer.rs:1290
+#: src/viewer.rs:1298
 #, no-c-format
 msgid "{n} match"
 msgid_plural "{n} matches"
 msgstr[0] "{n} Treffer"
 msgstr[1] "{n} Treffer"
 
-#: src/viewer.rs:1499
+#: src/viewer.rs:1515
 msgid "PDF Documents"
 msgstr "PDF-Dokumente"
 
-#: src/viewer.rs:1503
+#: src/viewer.rs:1519
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: src/viewer.rs:1509
+#: src/viewer.rs:1525
 msgid "Open Document"
 msgstr "Dokument öffnen"
 

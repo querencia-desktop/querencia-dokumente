@@ -14,10 +14,10 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use gtk::prelude::*;
-use gtk::{gdk, glib};
+use gtk::{gdk, gio, glib};
 
 use crate::i18n::{gettext, gettext_f};
-use crate::{APP_NAME, resource};
+use crate::resource;
 
 /// Platz für ein Nebenfenster eines Hauptfensters. Hält das offene Fenster
 /// nur schwach: Nach dem Schließen gibt GTK es frei, der Platz ist dann leer
@@ -267,7 +267,31 @@ pub fn ask_password(slot: &Slot, name: &str, wrong: bool, on_unlock: impl Fn(Str
     entry.grab_focus();
 }
 
+/// Website von Querencia Desktop (Info-Dialog).
+const WEBSITE: &str = "https://querencialinux.org";
+/// Neue Fehlermeldung im gemeinsamen Repo (Hilfe → Fehler melden).
+pub const REPORT_BUG: &str = "https://github.com/querencia-desktop/querencia/issues/new/choose";
+
+/// Adresse der Online-Hilfe in der Sprache der Oberfläche: Die Adresse steht
+/// selbst im Katalog, gettext wählt sie wie jeden Text nach der Locale
+/// (ohne Katalog Englisch).
+pub fn online_help() -> String {
+    // TRANSLATORS: Adresse der Online-Hilfe; nur das Sprachkürzel anpassen
+    // (deutsch …/de/docs/).
+    gettext("https://querencialinux.org/en/docs/")
+}
+
+/// Öffnet `uri` mit dem Standardprogramm der Sitzung (wie xdg-open).
+pub fn open_uri(parent: &impl IsA<gtk::Window>, uri: &str) {
+    let context = WidgetExt::display(parent.as_ref()).app_launch_context();
+    if let Err(err) = gio::AppInfo::launch_default_for_uri(uri, Some(&context)) {
+        eprintln!("querencia-dokumente: {uri} nicht geöffnet: {err}");
+    }
+}
+
 /// „About“ („Info“): ein offenes Fenster nach vorn holen, sonst neu bauen.
+/// Programmsymbol, Name, Version, Hinweis auf die Alpha, Website, Copyright
+/// und Lizenz.
 pub fn show_about(slot: &Slot) {
     if let Some(w) = slot.open() {
         w.present();
@@ -275,7 +299,9 @@ pub fn show_about(slot: &Slot) {
     }
     let Some(window) = slot.window() else { return };
     let window = &window;
-    window.set_title(Some(&gettext_f("About {name}", &[("name", APP_NAME)])));
+    // TRANSLATORS: Fenstertitel des Info-Dialogs; deutsch mit dem Eigennamen
+    // „Querencia Dokumente“, englisch mit dem Namen aus dem Anwendungsmenü.
+    window.set_title(Some(&gettext("About Document Viewer")));
     let body = gtk::Box::new(gtk::Orientation::Vertical, 8);
     body.set_margin_top(6);
     body.set_margin_start(12);
@@ -285,24 +311,46 @@ pub fn show_about(slot: &Slot) {
     img.set_pixel_size(64);
     body.append(&img);
     let name = gtk::Label::new(None);
+    // TRANSLATORS: Programmname und Version im Info-Dialog; deutsch
+    // „Querencia Dokumente {version}“.
+    let title = gettext_f(
+        "Document Viewer {version}",
+        &[("version", env!("CARGO_PKG_VERSION"))],
+    );
     name.set_markup(&format!(
-        "<b><big>{APP_NAME} {}</big></b>",
-        env!("CARGO_PKG_VERSION")
+        "<b><big>{}</big></b>",
+        glib::markup_escape_text(&title)
     ));
     let text = gtk::Label::new(Some(&gettext(
         "Classic document viewer for Querencia Desktop\nmodelled on Evince 2.30.\n\n\
-         Documents are only displayed, never changed.\nAlpha – not released for everyday use.",
+         Documents are only displayed, never changed.",
     )));
     text.set_justify(gtk::Justification::Center);
-    let lic = gtk::Label::new(Some(&gettext(
-        "License: GNU GPL, version 3 or later\nPDF rendering: Poppler (GPL)",
-    )));
-    lic.set_justify(gtk::Justification::Center);
+    let alpha = gtk::Label::new(Some(&gettext("Alpha – not released for everyday use.")));
+    let website = gtk::Label::new(None);
+    website.set_markup(&format!("<a href=\"{WEBSITE}\">querencialinux.org</a>"));
+    // Wie die Einträge im Hilfe-Menü über GIO statt über das Portal öffnen.
+    let ww = window.downgrade();
+    website.connect_activate_link(move |_, uri| {
+        if let Some(w) = ww.upgrade() {
+            open_uri(&w, uri);
+        }
+        glib::Propagation::Stop
+    });
+    let copyright = gtk::Label::new(Some("© 2026 Querencia Desktop contributors"));
+    copyright.add_css_class("dim-label");
+    let lic = gtk::Label::new(Some(&gettext("License: GPL-3.0-or-later")));
     lic.add_css_class("dim-label");
+    let poppler = gtk::Label::new(Some(&gettext("PDF rendering: Poppler (GPL)")));
+    poppler.add_css_class("dim-label");
     for w in [
         name.upcast_ref::<gtk::Widget>(),
         text.upcast_ref(),
+        alpha.upcast_ref(),
+        website.upcast_ref(),
+        copyright.upcast_ref(),
         lic.upcast_ref(),
+        poppler.upcast_ref(),
     ] {
         body.append(w);
     }

@@ -200,7 +200,15 @@ pub fn menu_model() -> gio::Menu {
     );
     bar.append_submenu(
         Some(&gettext("_Help")),
-        &submenu(&[section(&[item(&gettext("_About"), "win.about", None)])]),
+        &submenu(&[
+            section(&[
+                // TRANSLATORS: Hilfe-Menü; Online-Hilfe und Fehlermeldung öffnen
+                // den Browser. Zugriffstasten im Menü verschieden halten.
+                item(&gettext("Online _Help"), "win.online-help", None),
+                item(&gettext("_Report a Bug"), "win.report-bug", None),
+            ]),
+            section(&[item(&gettext("_About"), "win.about", None)]),
+        ]),
     );
     bar
 }
@@ -1450,6 +1458,14 @@ impl Viewer {
                 v.page_entry.grab_focus();
                 v.page_entry.select_region(0, -1);
             }),
+        );
+        add(
+            "online-help",
+            Box::new(|v| dialogs::open_uri(&v.window, &dialogs::online_help())),
+        );
+        add(
+            "report-bug",
+            Box::new(|v| dialogs::open_uri(&v.window, dialogs::REPORT_BUG)),
         );
         add(
             "about",

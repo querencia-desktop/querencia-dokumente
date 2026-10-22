@@ -48,8 +48,8 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 
 | | |
 |---|---|
-| Version | 0.1.3 (Tag `dokumente/0.1.3`; keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird, Neuladen wie Evince); davor 0.1.2 (dunkles Thema auch beim Start, QD-081) |
-| Auf der Entwicklungs-VM | live seit 20.10.2026 (zuerst 0.1.0, dann 0.1.1), Standard für PDF |
+| Version | 0.1.4 (Tag `dokumente/0.1.4`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und Fehler melden); davor 0.1.3 (keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird) |
+| Auf der Entwicklungs-VM | live seit 20.10.2026 (zuletzt 0.1.3 seit 21.10.2026), Standard für PDF; 0.1.4 wartet auf Freigabe |
 | Letzte Prüfung | 21.10.2026 (0.1.3): 52 Unit-Tests; Leerseiten-Probe mit dem Befund-PDF und mit Überschreiben/Löschen im Betrieb, hell und dunkel gegen 0.1.2 (isoliert, Bericht `dokumente-013-bericht.md`). 21.10.2026 (0.1.2): 47 Unit-Tests; hell gegen 0.1.1 und dunkel (beim Start und beim Wechsel) je de/en × 1024×768/1920×1080 (isoliert, Bericht `dokumente-012-bericht.md`). 20.10.2026 (0.1.1): 47 Unit-Tests; Nebenfenster je 3× geöffnet, de/en × 1024×768/1920×1080, gegen 0.1.0 (isoliert). 0.1.0: GUI-Szenario mit 49 Schritten je de/en × 1024×768/1920×1080 (isoliert), Messung mit 500 Seiten, Probe des Integrationsskripts 165/0 |
 | Bekannte Lücken | siehe [docs/testing.md](docs/testing.md), Abschnitt „Nicht getestet“ |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Poppler 26.01, Rust 1.93 |
