@@ -26,13 +26,13 @@ bash werkzeug/bauen.sh release    # nur Release
   `querencia-packaging`) nach `target/remap/release/`. Das Skript zählt am
   Ende die Home-Pfade im Binary (`strings -a … | grep -c $HOME`, Soll 0).
   Ohne Remap enthält ein Release-Binary Panik-Orte aus dem Cargo-Cache
-  (GH-2: 27 Treffer beim Rechner).
+  (27 Treffer beim Rechner).
 - Protokolle: `nachweis/bau/<art>.log`, Prüfsumme `nachweis/bau/release-sha256.txt`.
 
 ## Übersetzungen
 
 Englisch steht im Code (msgid), Deutsch in `po/de.po`. Werkzeug ist
-`werkzeug/i18n.py` aus dem Editor (G2-AC, nur Python-Standardbibliothek):
+`werkzeug/i18n.py` aus dem Editor (nur Python-Standardbibliothek):
 
 ```bash
 python3 werkzeug/i18n.py pot      # po/querencia-dokumente.pot aus src/ und data/*.desktop.in
@@ -65,7 +65,7 @@ zum SVG passt. Das Info-Fenster nimmt das Symbol aus der Ressource unter
 eigenem Namen (`org.querencia.Dokumente-info`), damit es nie neben dem
 PNG-Satz der App-ID im Symbolthema liegt (GTK-4.22-Symbolabsturz).
 
-## Paket (später, G2-F)
+## Paket (später)
 
 - `/usr/bin/querencia-dokumente`
 - `/usr/share/locale/de/LC_MESSAGES/querencia-dokumente.mo` (aus `po/de.po`
