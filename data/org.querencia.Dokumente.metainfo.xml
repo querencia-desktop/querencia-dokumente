@@ -6,8 +6,14 @@
   <id>org.querencia.Dokumente</id>
   <name>Querencia Documents</name>
   <name xml:lang="de">Querencia Dokumente</name>
+  <name xml:lang="it">Querencia Documenti</name>
+  <name xml:lang="es">Querencia Documentos</name>
+  <name xml:lang="fr">Querencia Documents</name>
   <summary>View PDF documents</summary>
   <summary xml:lang="de">PDF-Dokumente ansehen</summary>
+  <summary xml:lang="it">Visualizza documenti PDF</summary>
+  <summary xml:lang="es">Ver documentos PDF</summary>
+  <summary xml:lang="fr">Voir des documents PDF</summary>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <developer id="org.querencia">
@@ -18,8 +24,14 @@
   <description>
     <p>Querencia Documents is the document viewer of Querencia Desktop. It shows PDF files page after page with a classic menu bar, a toolbar with page entry and zoom, a side pane with thumbnails, text search with highlighted matches, copying of selected text, document properties, printing and full screen.</p>
     <p xml:lang="de">Querencia Dokumente ist der Dokumentenbetrachter von Querencia Desktop. Er zeigt PDF-Dateien fortlaufend mit klassischer Menüleiste, Werkzeugleiste mit Seitenfeld und Zoom, Seitenleiste mit Miniaturen, Textsuche mit hervorgehobenen Treffern, Kopieren markierten Textes, Dokumenteigenschaften, Drucken und Vollbild.</p>
+    <p xml:lang="it">Querencia Documenti è il visualizzatore di documenti di Querencia Desktop. Mostra i file PDF pagina dopo pagina con una classica barra dei menu, una barra degli strumenti con campo pagina e ingrandimento, un riquadro laterale con miniature, la ricerca nel testo con evidenziazione dei risultati, la copia del testo selezionato, le proprietà del documento, la stampa e lo schermo intero.</p>
+    <p xml:lang="es">Querencia Documentos es el visor de documentos de Querencia Desktop. Muestra archivos PDF página a página con una barra de menús clásica, una barra de herramientas con campo de página y ampliación, una barra lateral con miniaturas, búsqueda de texto con resultados resaltados, copia del texto seleccionado, propiedades del documento, impresión y pantalla completa.</p>
+    <p xml:lang="fr">Querencia Documents est le visionneur de documents de Querencia Desktop. Il affiche les fichiers PDF page après page avec une barre de menus classique, une barre d’outils avec champ de page et zoom, un panneau latéral avec vignettes, la recherche de texte avec mise en évidence des résultats, la copie du texte sélectionné, les propriétés du document, l’impression et le plein écran.</p>
     <p>Password protected documents are supported. Documents are only displayed, never modified or saved.</p>
     <p xml:lang="de">Passwortgeschützte Dokumente werden unterstützt. Dokumente werden nur angezeigt, nie verändert oder gespeichert.</p>
+    <p xml:lang="it">Sono supportati i documenti protetti da password. I documenti vengono solo mostrati, mai modificati o salvati.</p>
+    <p xml:lang="es">Se admiten documentos protegidos con contraseña. Los documentos solo se muestran, nunca se modifican ni se guardan.</p>
+    <p xml:lang="fr">Les documents protégés par mot de passe sont pris en charge. Les documents sont uniquement affichés, jamais modifiés ni enregistrés.</p>
   </description>
   <url type="homepage">https://querencialinux.org</url>
   <launchable type="desktop-id">org.querencia.Dokumente.desktop</launchable>
@@ -40,6 +52,18 @@
     <keyword xml:lang="de">Dokument</keyword>
     <keyword xml:lang="de">Betrachter</keyword>
     <keyword xml:lang="de">Dokumentenbetrachter</keyword>
+    <keyword xml:lang="it">PDF</keyword>
+    <keyword xml:lang="it">documento</keyword>
+    <keyword xml:lang="it">visualizzatore</keyword>
+    <keyword xml:lang="it">lettore</keyword>
+    <keyword xml:lang="es">PDF</keyword>
+    <keyword xml:lang="es">documento</keyword>
+    <keyword xml:lang="es">visor</keyword>
+    <keyword xml:lang="es">lector</keyword>
+    <keyword xml:lang="fr">PDF</keyword>
+    <keyword xml:lang="fr">document</keyword>
+    <keyword xml:lang="fr">visionneur</keyword>
+    <keyword xml:lang="fr">lecteur</keyword>
   </keywords>
   <content_rating type="oars-1.1"/>
   <branding>
