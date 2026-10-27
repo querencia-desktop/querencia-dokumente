@@ -7,9 +7,10 @@ klassischen Desktopumgebung im GNOME-2-Stil für Wayland (labwc, Rust, GTK 4).
 Installiert wird es zusammen mit Querencia Desktop aus der APT-Quelle;
 Anleitung auf <https://querencialinux.org>.
 
-*English summary:* A classic PDF document viewer modelled on Evince 2.30.
-Part of Querencia Desktop, a classic GNOME-2-style desktop for Wayland.
-Alpha software; documentation is in German.
+*English summary:* A classic PDF document viewer modelled on Evince 2.30. Part
+of Querencia Desktop, a classic GNOME-2-style desktop for Wayland. Alpha
+software; user interface in German, English, Italian, Spanish and French;
+documentation is in German.
 
 > **Alpha.** Nur PDF; keine Links, kein Inhaltsverzeichnis, keine
 > Anmerkungen, keine Formulare. Keine Sicherheits- oder Datenverlustgarantie.
