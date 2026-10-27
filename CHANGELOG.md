@@ -5,6 +5,23 @@ nach [Semantic Versioning](https://semver.org/lang/de/). Solange die Hauptversio
 0 ist, kann sich alles ändern. Jede Zeile nennt, was Nutzer merken; Unfertiges
 steht als „unfertig“ da.
 
+## [0.1.5] – 2026-10-26
+
+### Neu
+- Italienisch, Spanisch, Französisch: Kataloge `po/it.po`, `po/es.po`,
+  `po/fr.po` (je 114 Texte, vollständig) für Menüs, Werkzeugleiste,
+  Suchleiste, Eigenschaften, Passwort- und Fehlerdialoge, Info-Dialog,
+  Statusleiste und Desktop-Datei (`Name[it]=Visualizzatore documenti`,
+  `Name[es]=Visor de documentos`, `Name[fr]=Visionneur de documents`);
+  MetaInfo mit Name, Zusammenfassung, Beschreibung und Schlüsselwörtern in
+  diesen Sprachen. Wortschatz Evince je Sprache und die gemeinsame
+  Querencia-Begriffstabelle; Zugriffstasten je Menü eindeutig.
+- „Online-Hilfe“ öffnet querencialinux.org/it|es|fr/docs/; Datum in den
+  Eigenschaften landesüblich, Dezimalkomma in Größen und Seitenmaß.
+
+### Unverändert
+- Deutsch, Englisch, Anzeige, Farben und Symbol wie 0.1.4.
+
 ## [0.1.4] – 2026-10-22
 
 ### Neu

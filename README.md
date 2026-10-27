@@ -50,8 +50,8 @@ Anwendungskennung (App-ID): `org.querencia.Dokumente` · Binary:
 
 | | |
 |---|---|
-| Version | 0.1.4 (Tag `dokumente/0.1.4`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.1.3 keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird; seit 0.1.2 dunkles Thema auch beim Start |
-| Letzte Prüfung | 22.10.2026 (0.1.4): 53 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isoliert de/en 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.1.3): 52 Unit-Tests; Probe mit Überschreiben und Löschen des offenen PDF im Betrieb, hell und dunkel gegen 0.1.2 (isoliert) |
+| Version | 0.1.5 (Tag `dokumente/0.1.5`; Italienisch, Spanisch, Französisch); seit 0.1.4 Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.1.3 keine weißen Seiten mehr, wenn das offene PDF neu geschrieben wird; seit 0.1.2 dunkles Thema auch beim Start |
+| Letzte Prüfung | 26.10.2026 (0.1.5): 53 Unit-Tests, Clippy sauber, `i18n.py pruefen` und `msgfmt --check` für de/es/fr/it; isoliert 1024×768: Szenario mit 49 Schritten de und en bestanden, dazu de/en/it/es/fr alle Menüs, Eigenschaften, Suchleiste, Seitenleiste, Passwortdialog, Online-Hilfe, „Fehler melden“, Info. 22.10.2026 (0.1.4): 53 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isoliert de/en 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.1.3): 52 Unit-Tests; Probe mit Überschreiben und Löschen des offenen PDF im Betrieb, hell und dunkel gegen 0.1.2 (isoliert) |
 | Bekannte Lücken | siehe [docs/testing.md](docs/testing.md), Abschnitt „Nicht getestet“ |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Poppler 26.01, Rust 1.93 |
 | Nicht getestet | andere Distributionen, HiDPI, Mehrmonitor, echte Drucker |
